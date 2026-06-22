@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kontakt | Properly</title>
+    <meta name="description" content="Kontaktujte Properly pre kúpu, predaj alebo prenájom nehnuteľnosti v Bratislave a okolí.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="contact">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Properly home"><svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true"><path d="M8 34V15L21 7l13 8v19" /><path d="M15 34V18.5l6-3.6 6 3.6v5.7H20" /><path d="M20 24.2h7c4.5 0 7 2.6 7 6.1 0 3.6-2.7 6.1-7.2 6.1H15" /></svg><span>Properly</span></a>
+      <nav class="main-nav" aria-label="Main navigation"><a href="listings.html" data-i18n="navListings">Ponuka</a><a href="index.html#process" data-i18n="navProcess">Ako pracujeme</a><a href="about.html" data-i18n="navAbout">O nás</a><a class="active" href="contact.html" data-i18n="navContact">Kontakt</a></nav>
+      <div class="language-switcher" aria-label="Language switcher"><button type="button" data-lang="sk">SK</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="tr">TR</button><button type="button" data-lang="ru">RU</button></div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container compact-hero">
+          <h1 data-i18n="contactPageTitle">Kontakt</h1>
+          <p data-i18n="contactPageText">Napíšte, či chcete predávať, prenajať, kúpiť alebo hľadáte prenájom. Ozveme sa s jasným ďalším krokom.</p>
+        </div>
+      </section>
+      <section class="section-pad contact-page-section">
+        <div class="container contact-page-grid">
+          <div class="contact-aside">
+            <h2 data-i18n="contactAsideTitle">Transparentne od prvého hovoru</h2>
+            <p data-i18n="contactAsideText">Prvé posúdenie sa zameria na lokalitu, právny stav, očakávania a reálnu prezentáciu nehnuteľnosti. Všetky vzorkové údaje v tomto návrhu sú označené.</p>
+            <div class="aside-lines">
+              <span data-i18n="serviceResidential">Rezidenčné</span>
+              <span data-i18n="serviceCommercial">Komerčné</span>
+              <span>properly.sk</span>
+            </div>
+          </div>
+          <form class="contact-panel standalone" data-contact-form>
+            <h2 data-i18n="sendMessageTitle">Odoslať správu</h2>
+            <div class="form-grid">
+              <label><span data-i18n="formName">Meno</span><input type="text" name="name" autocomplete="name" required></label>
+              <label><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+              <label><span data-i18n="formPhone">Telefón</span><input type="tel" name="phone" autocomplete="tel"></label>
+              <label><span data-i18n="formInterest">Typ záujmu</span><select name="interest" required><option value="" data-i18n="formInterestChoose">Vyberte typ záujmu</option><option value="sell" data-i18n="interestSell">Predaj</option><option value="rent" data-i18n="interestRent">Prenájom</option><option value="buy" data-i18n="interestBuy">Kúpa</option><option value="lease" data-i18n="interestLease">Hľadám prenájom</option></select></label>
+              <label class="full"><span data-i18n="formMessage">Správa</span><textarea name="message" rows="6" required></textarea></label>
+            </div>
+            <button class="button accent full-button" type="submit" data-i18n="sendInquiry">Odoslať dopyt</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <a class="brand footer-brand" href="index.html" aria-label="Properly home"><svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true"><path d="M8 34V15L21 7l13 8v19" /><path d="M15 34V18.5l6-3.6 6 3.6v5.7H20" /><path d="M20 24.2h7c4.5 0 7 2.6 7 6.1 0 3.6-2.7 6.1-7.2 6.1H15" /></svg><span>Properly</span></a>
+        <nav aria-label="Footer navigation"><a href="listings.html" data-i18n="navListings">Ponuka</a><a href="about.html" data-i18n="navAbout">O nás</a><a href="contact.html" data-i18n="navContact">Kontakt</a></nav>
+        <a class="footer-domain" href="index.html">properly.sk</a>
+      </div>
+    </footer>
+    <script src="assets/site.js"></script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ponuka | Properly</title>
+    <meta name="description" content="Ukážková ponuka nehnuteľností Properly pre Bratislavu a okolie.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="listings">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Properly home">
+        <svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true">
+          <path d="M8 34V15L21 7l13 8v19" /><path d="M15 34V18.5l6-3.6 6 3.6v5.7H20" /><path d="M20 24.2h7c4.5 0 7 2.6 7 6.1 0 3.6-2.7 6.1-7.2 6.1H15" />
+        </svg>
+        <span>Properly</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="active" href="listings.html" data-i18n="navListings">Ponuka</a>
+        <a href="index.html#process" data-i18n="navProcess">Ako pracujeme</a>
+        <a href="about.html" data-i18n="navAbout">O nás</a>
+        <a href="contact.html" data-i18n="navContact">Kontakt</a>
+      </nav>
+      <div class="language-switcher" aria-label="Language switcher">
+        <button type="button" data-lang="sk">SK</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="tr">TR</button>
+        <button type="button" data-lang="ru">RU</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container compact-hero">
+          <h1 data-i18n="listingsPageTitle">Ponuka nehnuteľností</h1>
+          <p data-i18n="listingsPageText">Grid a filtre sú pripravené pre 20+ reálnych záznamov z jednoduchého backendu. Aktuálne položky sú označené ako ukážkové dáta.</p>
+        </div>
+      </section>
+
+      <section class="section-pad listings-page-section">
+        <div class="container">
+          <form class="filters-bar" id="listingFilters" aria-label="Listing filters">
+            <label>
+              <span data-i18n="filterMode">Režim</span>
+              <select name="mode">
+                <option value="" data-i18n="filterAll">Všetko</option>
+                <option value="buy" data-i18n="tabBuy">Kúpiť</option>
+                <option value="rent" data-i18n="tabRent">Prenajať</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="fieldLocation">Lokalita</span>
+              <select name="location">
+                <option value="" data-i18n="filterAnyLocation">Akákoľvek lokalita</option>
+                <option value="Bratislava - Staré Mesto">Bratislava - Staré Mesto</option>
+                <option value="Bratislava - Devín">Bratislava - Devín</option>
+                <option value="Bratislava - Ružinov">Bratislava - Ružinov</option>
+                <option value="Bratislava - Petržalka">Bratislava - Petržalka</option>
+                <option value="Bratislava - Karlova Ves">Bratislava - Karlova Ves</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="fieldType">Typ</span>
+              <select name="type">
+                <option value="" data-i18n="filterAnyType">Akýkoľvek typ</option>
+                <option value="apartment" data-i18n="typeApartment">Byt</option>
+                <option value="house" data-i18n="typeHouse">Dom</option>
+                <option value="commercial" data-i18n="typeCommercial">Komerčné</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="fieldPrice">Cena do</span>
+              <select name="price">
+                <option value="" data-i18n="filterAnyPrice">Bez limitu</option>
+                <option value="250000">250 000 €</option>
+                <option value="500000">500 000 €</option>
+                <option value="750000">750 000 €</option>
+              </select>
+            </label>
+          </form>
+          <div class="listing-toolbar">
+            <p id="listingCount" aria-live="polite"></p>
+            <p class="sample-note" data-i18n="sheetReady">Dátový model je pripravený na napojenie na Google Sheet alebo jednoduché API.</p>
+          </div>
+          <div class="listing-grid expanded" id="listingsGrid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <a class="brand footer-brand" href="index.html" aria-label="Properly home"><svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true"><path d="M8 34V15L21 7l13 8v19" /><path d="M15 34V18.5l6-3.6 6 3.6v5.7H20" /><path d="M20 24.2h7c4.5 0 7 2.6 7 6.1 0 3.6-2.7 6.1-7.2 6.1H15" /></svg><span>Properly</span></a>
+        <nav aria-label="Footer navigation"><a href="listings.html" data-i18n="navListings">Ponuka</a><a href="about.html" data-i18n="navAbout">O nás</a><a href="contact.html" data-i18n="navContact">Kontakt</a></nav>
+        <a class="footer-domain" href="index.html">properly.sk</a>
+      </div>
+    </footer>
+    <script src="assets/site.js"></script>
+  </body>
+</html>

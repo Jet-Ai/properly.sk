@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Properly | Property, done properly.</title>
+    <meta name="description" content="Properly je realitná kancelária pre overené nehnuteľnosti v Bratislave a okolí.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="home">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Properly home">
+        <svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true">
+          <path d="M8 34V15L21 7l13 8v19" />
+          <path d="M15 34V18.5l6-3.6 6 3.6v5.7H20" />
+          <path d="M20 24.2h7c4.5 0 7 2.6 7 6.1 0 3.6-2.7 6.1-7.2 6.1H15" />
+        </svg>
+        <span>Properly</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="listings.html" data-i18n="navListings">Ponuka</a>
+        <a href="index.html#process" data-i18n="navProcess">Ako pracujeme</a>
+        <a href="about.html" data-i18n="navAbout">O nás</a>
+        <a href="contact.html" data-i18n="navContact">Kontakt</a>
+      </nav>
+      <div class="language-switcher" aria-label="Language switcher">
+        <button type="button" data-lang="sk" aria-label="Slovensky">SK</button>
+        <button type="button" data-lang="en" aria-label="English">EN</button>
+        <button type="button" data-lang="tr" aria-label="Türkçe">TR</button>
+        <button type="button" data-lang="ru" aria-label="Русский">RU</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero section-pad">
+        <div class="hero-media" aria-hidden="true">
+          <img src="assets/images/hero-bratislava.png" alt="">
+        </div>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <h1><span>Property,</span><span>done properly.</span></h1>
+            <p data-i18n="heroText">Overené nehnuteľnosti v Bratislave a okolí. Pravdivé údaje, reálne fotografie a proces vedený od prvého preverenia až po podpis.</p>
+            <div class="hero-actions">
+              <a class="button primary" href="listings.html" data-i18n="heroPrimary">Hľadať nehnuteľnosť</a>
+              <a class="button secondary" href="contact.html" data-i18n="heroSecondary">Predať alebo prenajať</a>
+            </div>
+          </div>
+
+          <form class="search-panel" id="homeSearch" aria-label="Property search">
+            <div class="tabs" role="group" aria-label="Search mode">
+              <button type="button" class="is-active" data-search-mode="buy" data-i18n="tabBuy">Kúpiť</button>
+              <button type="button" data-search-mode="rent" data-i18n="tabRent">Prenajať</button>
+            </div>
+            <div class="search-fields">
+              <label>
+                <span data-i18n="fieldLocation">Lokalita</span>
+                <select name="location">
+                  <option value="" data-i18n="optionLocation">Vyberte lokalitu</option>
+                  <option value="Bratislava - Staré Mesto">Bratislava - Staré Mesto</option>
+                  <option value="Bratislava - Devín">Bratislava - Devín</option>
+                  <option value="Bratislava - Ružinov">Bratislava - Ružinov</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="fieldType">Typ</span>
+                <select name="type">
+                  <option value="" data-i18n="optionType">Vyberte typ</option>
+                  <option value="apartment" data-i18n="typeApartment">Byt</option>
+                  <option value="house" data-i18n="typeHouse">Dom</option>
+                  <option value="commercial" data-i18n="typeCommercial">Komerčné</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="fieldPrice">Cena do</span>
+                <select name="price">
+                  <option value="" data-i18n="optionPrice">Zvoľte cenu</option>
+                  <option value="250000">250 000 €</option>
+                  <option value="500000">500 000 €</option>
+                  <option value="750000">750 000 €</option>
+                </select>
+              </label>
+              <button class="button primary" type="submit" data-i18n="searchButton">Vyhľadať</button>
+            </div>
+            <p class="sample-note" data-i18n="sampleNote">Vzorkové dáta označené. Ceny a miesta sa nemenia podľa jazyka.</p>
+          </form>
+        </div>
+      </section>
+
+      <section class="verification-strip" aria-label="Properly verification process">
+        <div class="container ribbon-rail">
+          <div class="rail-start">
+            <span class="shield-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><path d="M16 3 27 7v7c0 7.2-4.4 12.1-11 15-6.6-2.9-11-7.8-11-15V7l11-4Z"/><path d="m10 16 4 4 8-9"/></svg>
+            </span>
+            <strong data-i18n="verifyTitle">Overujeme každú nehnuteľnosť</strong>
+          </div>
+          <ol>
+            <li>
+              <span>1</span>
+              <strong data-i18n="stepOne">Titul a vlastníctvo</strong>
+              <small data-i18n="stepOneText">Kontrola listu vlastníctva</small>
+            </li>
+            <li>
+              <span>2</span>
+              <strong data-i18n="stepTwo">Stav a údaje</strong>
+              <small data-i18n="stepTwoText">Overenie údajov a rozmerov</small>
+            </li>
+            <li>
+              <span>3</span>
+              <strong data-i18n="stepThree">Prezentácia</strong>
+              <small data-i18n="stepThreeText">Reálne fotografie a pôdorysy</small>
+            </li>
+            <li>
+              <span>4</span>
+              <strong data-i18n="stepFour">Právna istota</strong>
+              <small data-i18n="stepFourText">Zmluvy cez spolupracujúcu advokátsku kanceláriu</small>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="listings-preview section-pad" id="listings">
+        <div class="container">
+          <div class="section-heading">
+            <h2 data-i18n="featuredTitle">Nehnuteľnosti v Bratislave a okolí</h2>
+            <a class="text-link" href="listings.html" data-i18n="viewListings">Zobraziť ponuku</a>
+          </div>
+          <div class="filter-chips" aria-label="Featured filters">
+            <button class="is-active" type="button" data-feature-filter="buy" data-i18n="chipBuy">Kúpa</button>
+            <button type="button" data-feature-filter="rent" data-i18n="chipRent">Prenájom</button>
+            <button type="button" data-feature-filter="apartment" data-i18n="chipApartments">Byty</button>
+            <button type="button" data-feature-filter="house" data-i18n="chipHouses">Domy</button>
+            <button type="button" data-feature-filter="commercial" data-i18n="chipCommercial">Komerčné</button>
+          </div>
+          <div class="listing-grid" id="featuredListings"></div>
+          <p class="center-note" data-i18n="recordsNote">Ukážkové záznamy pre návrh rozhrania. Reálne ponuky sa načítajú z backendu.</p>
+        </div>
+      </section>
+
+      <section class="process-section section-pad" id="process">
+        <div class="container process-grid">
+          <div class="process-anchor">
+            <svg viewBox="0 0 52 52" aria-hidden="true">
+              <path d="M26 4 43 10v12c0 11-6.8 18.5-17 23-10.2-4.5-17-12-17-23V10l17-6Z"/>
+              <path d="m16 27 7 7 14-17"/>
+            </svg>
+            <h2 data-i18n="processTitle">Overené postupy. Istota pri každom kroku.</h2>
+          </div>
+          <div class="process-steps">
+            <article>
+              <span class="step-number">1</span>
+              <h3 data-i18n="processOne">Overiť</h3>
+              <p data-i18n="processOneText">Kontrola vlastníctva a tiarch v katastri. Právny stav musí byť jasný a overený.</p>
+            </article>
+            <article>
+              <span class="step-number">2</span>
+              <h3 data-i18n="processTwo">Prezentovať</h3>
+              <p data-i18n="processTwoText">Skutočné fotografie a presné výmery. Fakty, ktoré ukazujú reálny stav.</p>
+            </article>
+            <article>
+              <span class="step-number">3</span>
+              <h3 data-i18n="processThree">Uzavrieť</h3>
+              <p data-i18n="processThreeText">Spolupráca s advokátskou kanceláriou. Zmluvy pripravujeme bezpečne a korektne.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="bio-contact section-pad">
+        <div class="container bio-grid">
+          <div class="bio-image">
+            <img src="assets/images/broker-consultation.png" alt="" loading="lazy">
+          </div>
+          <div class="bio-copy">
+            <h2 data-i18n="bioTitle">Skúsený maklér, overený proces</h2>
+            <p data-i18n="bioText">Properly stavia na licencovanom sprostredkovaní, existujúcich klientoch a profesionálnej sieti v Bratislave. Každý predaj, kúpa aj prenájom má jasné kroky a dokumenty pod kontrolou.</p>
+            <div class="service-list" aria-label="Services">
+              <span data-i18n="serviceResidential">Rezidenčné</span>
+              <span data-i18n="serviceCommercial">Komerčné</span>
+              <span data-i18n="serviceArea">Bratislava a okolie</span>
+              <span>SK / EN / TR / RU</span>
+            </div>
+            <div class="hero-actions">
+              <a class="button primary" href="about.html" data-i18n="aboutBroker">O maklérovi</a>
+              <a class="button secondary" href="contact.html" data-i18n="contactButton">Kontaktovať</a>
+            </div>
+          </div>
+          <form class="contact-panel" data-contact-form>
+            <h2 data-i18n="contactCta">Máte nehnuteľnosť alebo hľadáte novú?</h2>
+            <div class="form-grid">
+              <label>
+                <span data-i18n="formName">Meno</span>
+                <input type="text" name="name" autocomplete="name" required>
+              </label>
+              <label>
+                <span>Email</span>
+                <input type="email" name="email" autocomplete="email" required>
+              </label>
+              <label>
+                <span data-i18n="formPhone">Telefón</span>
+                <input type="tel" name="phone" autocomplete="tel">
+              </label>
+              <label class="full">
+                <span data-i18n="formInterest">Typ záujmu</span>
+                <select name="interest" required>
+                  <option value="" data-i18n="formInterestChoose">Vyberte typ záujmu</option>
+                  <option value="sell" data-i18n="interestSell">Predaj</option>
+                  <option value="rent" data-i18n="interestRent">Prenájom</option>
+                  <option value="buy" data-i18n="interestBuy">Kúpa</option>
+                  <option value="lease" data-i18n="interestLease">Hľadám prenájom</option>
+                </select>
+              </label>
+              <label class="full">
+                <span data-i18n="formMessage">Správa</span>
+                <textarea name="message" rows="5" required></textarea>
+              </label>
+            </div>
+            <button class="button accent full-button" type="submit" data-i18n="sendInquiry">Odoslať dopyt</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <a class="brand footer-brand" href="index.html" aria-label="Properly home">
+          <svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true">
+            <path d="M8 34V15L21 7l13 8v19" />
+            <path d="M15 34V18.5l6-3.6 6 3.6v5.7H20" />
+            <path d="M20 24.2h7c4.5 0 7 2.6 7 6.1 0 3.6-2.7 6.1-7.2 6.1H15" />
+          </svg>
+          <span>Properly</span>
+        </a>
+        <nav aria-label="Footer navigation">
+          <a href="listings.html" data-i18n="navListings">Ponuka</a>
+          <a href="about.html" data-i18n="navAbout">O nás</a>
+          <a href="contact.html" data-i18n="navContact">Kontakt</a>
+        </nav>
+        <a class="footer-domain" href="index.html">properly.sk</a>
+      </div>
+    </footer>
+
+    <script src="assets/site.js"></script>
+  </body>
+</html>
