@@ -1,77 +1,23 @@
 :root {
-  /* Brand Colors from Logo */
-  --purple-primary: #A358E8;         /* Main logo text color */
-  --lime-accent: #B4F500;            /* The vibrant lime accent dot */
-  
-  /* The New Dark Structural System */
-  --danube-slate: #07111A;           /* Swapped from deep teal to dark midnight blueprint background */
-  --registry-blue: #A358E8;          /* Swapped to your brand purple for primary actions/links */
-  --registry-blue-dark: #7E3BB8;     /* Deeper purple variant for button hover states */
-  --limestone: #111D29;              /* Swapped to a slightly lighter dark-blue for structural sections/cards */
-  --copper-roof: #B4F500;            /* Swapped the accent color token entirely to the electric lime */
-  
-  /* Borders and Typography Controls */
-  --paper: #0D1924;                  /* Swapped from white to a dark card component background */
-  --mist-border: #1C3322;            /* Subdued architectural blueprint-line color for dividing borders */
-  --charcoal: #FFFFFF;               /* Swapped from dark gray to crisp white for your primary headers */
-  --muted: #94A3B8;                  /* Cool slate gray for secondary descriptions/labels */
-  --line: rgba(180, 245, 0, 0.15);   /* Updated line overlays with a subtle electric lime glow hint */
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.5); /* Deep dark shadow for floating layers instead of light teal */
-  
-  /* Layout constraints */
+  --danube-slate: #bb68ff;
+  --registry-blue: #bb68ff;
+  --registry-blue-dark: #9747e8;
+  --limestone: #061a26;
+  --copper-roof: #b8ff12;
+  --paper: #071824;
+  --mist-border: #244252;
+  --charcoal: #f4f8ff;
+  --muted: #a8bac6;
+  --blueprint-deep: #020b14;
+  --blueprint-navy: #001421;
+  --properly-purple: #b45dff;
+  --properly-lime: #b8ff12;
+  --line: rgba(184, 255, 18, 0.2);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
   --radius: 8px;
   --container: 1180px;
   --heading: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
   --body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  /* Fix the invisible text inside the search card toggle buttons */
-.search-widget button, 
-.search-type-toggle button,
-[class*="search"] button {
-  color: #FFFFFF !important; /* Forces the text to be crisp white */
-}
-
-/* Fix text contrast for the paragraph description in the hero section */
-.hero p, .hero-content p, .intro-text {
-  color: #111D29 !important; /* Darkens the paragraph text over the white gradient for crisp legibility */
-  font-weight: 500;
-}
-}
-
-/* ==========================================================================
-   ACTUAL CLASS STYLING RULES (MUST SIT OUTSIDE OF :ROOT)
-   ========================================================================== */
-
-/* 1. Force the Header/Navigation Area to be Dark */
-header, .nav-container, .top-bar {
-  background-color: #07111A !important;
-}
-
-/* Fix navigation link colors so they are readable on dark background */
-.nav-container a, header a, .language-switcher a {
-  color: #FFFFFF !important;
-}
-
-/* 2. Fix the Main Headings (Make them crisp White or soft Purple) */
-h1, .hero h1, h1.title {
-  color: #FFFFFF !important; 
-}
-
-h2, h3 {
-  color: #A358E8 !important; 
-}
-
-/* 3. Fix the Outline Buttons (Prenájom, Byty, Domy, etc.) */
-.filter-button, .btn-outline {
-  border-color: #A358E8 !important; 
-  color: #FFFFFF !important;        
-  background: transparent !important;
-}
-
-/* Smooth transition when hovering over unselected buttons */
-.filter-button:hover, .btn-outline:hover {
-  background-color: #B4F500 !important; 
-  color: #000000 !important;            
-  border-color: #B4F500 !important;
 }
 
 * {
@@ -84,7 +30,12 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  background:
+    radial-gradient(circle at 82% 14%, rgba(184, 255, 18, 0.08), transparent 26rem),
+    linear-gradient(135deg, rgba(184, 255, 18, 0.045) 1px, transparent 1px),
+    linear-gradient(45deg, rgba(184, 255, 18, 0.03) 1px, transparent 1px),
+    var(--blueprint-deep);
+  background-size: auto, 42px 42px, 42px 42px, auto;
   color: var(--charcoal);
   font-family: var(--body);
   font-size: 16px;
@@ -137,8 +88,8 @@ select {
   align-items: center;
   gap: 28px;
   padding: 22px clamp(20px, 5vw, 58px);
-  background: rgba(255, 255, 255, 0.88);
-  border-bottom: 1px solid rgba(215, 222, 216, 0.65);
+  background: rgba(2, 11, 20, 0.9);
+  border-bottom: 1px solid rgba(184, 255, 18, 0.18);
   backdrop-filter: blur(18px);
 }
 
@@ -152,10 +103,20 @@ select {
   letter-spacing: 0;
 }
 
+.brand span {
+  color: var(--properly-purple);
+  text-transform: lowercase;
+}
+
+.brand span::after {
+  color: var(--properly-lime);
+  content: ".";
+}
+
 .brand-mark {
   width: 38px;
   height: 38px;
-  color: var(--danube-slate);
+  color: var(--properly-lime);
 }
 
 .brand-mark path {
@@ -225,7 +186,7 @@ select {
   position: relative;
   min-height: 770px;
   overflow: hidden;
-  background: linear-gradient(90deg, #fff 0%, #fff 38%, rgba(255, 255, 255, 0.2) 62%, rgba(255, 255, 255, 0) 100%);
+  background: var(--blueprint-deep);
 }
 
 .hero-media {
@@ -238,7 +199,10 @@ select {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(90deg, #fff 0%, #fff 33%, rgba(255, 255, 255, 0.86) 44%, rgba(255, 255, 255, 0.12) 65%, rgba(255, 255, 255, 0) 100%);
+  background:
+    linear-gradient(90deg, var(--blueprint-deep) 0%, rgba(2, 11, 20, 0.98) 36%, rgba(2, 11, 20, 0.74) 56%, rgba(2, 11, 20, 0.28) 100%),
+    linear-gradient(135deg, rgba(184, 255, 18, 0.18) 1px, transparent 1px);
+  background-size: auto, 40px 40px;
   content: "";
   pointer-events: none;
 }
@@ -308,7 +272,7 @@ h3 {
 .hero-copy p,
 .compact-hero p {
   max-width: 640px;
-  color: #34454d;
+  color: #d5e1ea;
   font-size: clamp(1.05rem, 1.8vw, 1.28rem);
 }
 
@@ -339,8 +303,8 @@ h3 {
 
 .button.primary {
   background: var(--registry-blue);
-  color: var(--paper);
-  box-shadow: 0 12px 26px rgba(47, 111, 131, 0.22);
+  color: var(--blueprint-deep);
+  box-shadow: 0 0 30px rgba(180, 93, 255, 0.28);
 }
 
 .button.primary:hover {
@@ -348,14 +312,14 @@ h3 {
 }
 
 .button.secondary {
-  background: rgba(255, 255, 255, 0.82);
-  border-color: var(--registry-blue);
-  color: var(--registry-blue);
+  background: rgba(7, 24, 36, 0.76);
+  border-color: var(--properly-lime);
+  color: var(--properly-lime);
 }
 
 .button.accent {
   background: var(--copper-roof);
-  color: var(--paper);
+  color: var(--blueprint-deep);
 }
 
 .search-panel {
@@ -363,8 +327,8 @@ h3 {
   width: min(730px, 100%);
   margin-top: 10px;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(215, 222, 216, 0.84);
+  background: rgba(7, 24, 36, 0.9);
+  border: 1px solid rgba(184, 255, 18, 0.26);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
@@ -407,8 +371,8 @@ h3 {
 
 .filter-chips button.is-active,
 .filter-chips button:hover {
-  background: var(--registry-blue);
-  color: var(--paper);
+  background: var(--properly-lime);
+  color: var(--blueprint-deep);
 }
 
 .search-fields,
@@ -422,7 +386,7 @@ h3 {
 label span {
   display: block;
   margin-bottom: 7px;
-  color: #526269;
+  color: var(--muted);
   font-size: 0.86rem;
   font-weight: 700;
 }
@@ -457,9 +421,9 @@ textarea {
 .verification-strip {
   position: relative;
   z-index: 3;
-  background: var(--paper);
-  border-top: 1px solid rgba(215, 222, 216, 0.8);
-  border-bottom: 1px solid rgba(215, 222, 216, 0.8);
+  background: rgba(2, 11, 20, 0.94);
+  border-top: 1px solid rgba(184, 255, 18, 0.22);
+  border-bottom: 1px solid rgba(184, 255, 18, 0.22);
 }
 
 .ribbon-rail {
@@ -474,7 +438,7 @@ textarea {
   display: flex;
   align-items: center;
   gap: 15px;
-  color: var(--danube-slate);
+  color: var(--charcoal);
   font-size: 0.94rem;
   line-height: 1.35;
 }
@@ -552,7 +516,7 @@ textarea {
 }
 
 .ribbon-rail strong {
-  color: var(--danube-slate);
+  color: var(--charcoal);
   font-size: 0.95rem;
 }
 
@@ -562,7 +526,9 @@ textarea {
 }
 
 .listings-preview {
-  background: linear-gradient(180deg, var(--limestone) 0%, #fff 100%);
+  background:
+    linear-gradient(180deg, var(--limestone) 0%, var(--blueprint-deep) 100%),
+    linear-gradient(90deg, rgba(184, 255, 18, 0.06) 1px, transparent 1px);
 }
 
 .section-heading {
@@ -604,10 +570,10 @@ textarea {
 
 .listing-card {
   overflow: hidden;
-  background: var(--paper);
-  border: 1px solid rgba(215, 222, 216, 0.88);
+  background: rgba(7, 24, 36, 0.92);
+  border: 1px solid rgba(184, 255, 18, 0.18);
   border-radius: var(--radius);
-  box-shadow: 0 16px 36px rgba(24, 49, 58, 0.09);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.28);
 }
 
 .listing-card .image-wrap {
@@ -634,7 +600,7 @@ textarea {
   left: 14px;
   border-radius: 5px;
   background: var(--copper-roof);
-  color: var(--paper);
+  color: var(--blueprint-deep);
   padding: 6px 10px;
   font-size: 0.75rem;
   font-weight: 850;
@@ -649,7 +615,7 @@ textarea {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #526269;
+  color: var(--muted);
   font-size: 0.93rem;
   font-weight: 650;
 }
@@ -668,7 +634,7 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  color: #53636a;
+  color: var(--muted);
   font-size: 0.92rem;
 }
 
@@ -717,7 +683,7 @@ textarea {
 }
 
 .process-section {
-  background: var(--paper);
+  background: var(--blueprint-deep);
 }
 
 .process-grid {
@@ -734,17 +700,17 @@ textarea {
   min-height: 270px;
   padding: 36px;
   background: var(--registry-blue);
-  color: var(--paper);
+  color: var(--blueprint-deep);
 }
 
 .process-anchor svg {
   width: 64px;
   margin-bottom: 34px;
-  color: var(--paper);
+  color: var(--blueprint-deep);
 }
 
 .process-anchor h2 {
-  color: var(--paper);
+  color: var(--blueprint-deep);
   font-size: clamp(2rem, 3vw, 2.6rem);
 }
 
@@ -776,14 +742,14 @@ textarea {
 .step-number {
   background: var(--registry-blue);
   border-color: var(--registry-blue);
-  color: var(--paper);
+  color: var(--blueprint-deep);
 }
 
 .process-steps p,
 .bio-copy p,
 .about-copy p,
 .contact-aside p {
-  color: #526269;
+  color: var(--muted);
 }
 
 .bio-contact {
@@ -830,7 +796,7 @@ textarea {
 .aside-lines span {
   padding: 14px 0 14px 38px;
   border-bottom: 1px solid var(--mist-border);
-  color: var(--danube-slate);
+  color: var(--charcoal);
   font-family: var(--heading);
   font-size: 1.2rem;
   font-weight: 700;
@@ -856,8 +822,8 @@ textarea {
   grid-column: 1 / -1;
   margin-top: 8px;
   padding: 36px;
-  background: var(--paper);
-  border: 1px solid rgba(215, 222, 216, 0.9);
+  background: rgba(7, 24, 36, 0.94);
+  border: 1px solid rgba(184, 255, 18, 0.22);
   border-radius: var(--radius);
   box-shadow: 0 16px 42px rgba(24, 49, 58, 0.08);
 }
@@ -890,7 +856,7 @@ textarea {
 }
 
 .site-footer {
-  background: var(--danube-slate);
+  background: #000812;
   color: rgba(255, 255, 255, 0.88);
   padding: 38px 0;
 }
@@ -903,11 +869,11 @@ textarea {
 }
 
 .footer-brand {
-  color: var(--paper);
+  color: var(--properly-purple);
 }
 
 .footer-brand .brand-mark {
-  color: var(--copper-roof);
+  color: var(--properly-lime);
 }
 
 .site-footer nav {
@@ -918,14 +884,16 @@ textarea {
 
 .footer-domain {
   justify-self: end;
-  color: #7fb6c5;
+  color: var(--properly-lime);
   font-family: var(--heading);
   font-size: 1.3rem;
   font-weight: 700;
 }
 
 .page-hero {
-  background: linear-gradient(180deg, var(--limestone), var(--paper));
+  background:
+    linear-gradient(180deg, var(--limestone), var(--blueprint-deep)),
+    linear-gradient(90deg, rgba(184, 255, 18, 0.06) 1px, transparent 1px);
   border-bottom: 1px solid var(--mist-border);
   padding: 60px 0 52px;
 }
@@ -974,7 +942,7 @@ textarea {
 
 #listingCount {
   margin: 0;
-  color: var(--danube-slate);
+  color: var(--charcoal);
   font-weight: 800;
 }
 
@@ -1017,7 +985,7 @@ textarea {
   margin: 0 0 18px;
   border-radius: 5px;
   background: var(--copper-roof);
-  color: var(--paper);
+  color: var(--blueprint-deep);
   padding: 7px 10px;
   font-weight: 850;
   letter-spacing: 0.03em;
@@ -1031,7 +999,7 @@ textarea {
 }
 
 .detail-content {
-  background: var(--paper);
+  background: var(--blueprint-deep);
 }
 
 .detail-grid {
@@ -1074,7 +1042,7 @@ textarea {
 .spec-panel strong {
   display: block;
   margin-top: 6px;
-  color: var(--danube-slate);
+  color: var(--charcoal);
   font-size: 1.2rem;
 }
 
@@ -1097,7 +1065,7 @@ textarea {
   border-radius: 6px;
   background:
     linear-gradient(135deg, rgba(47, 111, 131, 0.14) 0 25%, transparent 25% 50%, rgba(47, 111, 131, 0.1) 50% 75%, transparent 75%),
-    #edf2f0;
+    var(--blueprint-navy);
   background-size: 44px 44px;
 }
 
@@ -1201,12 +1169,12 @@ textarea {
 }
 
 .contact-aside h2 {
-  color: var(--paper);
+  color: var(--blueprint-deep);
   font-size: clamp(2rem, 3vw, 3rem);
 }
 
 .contact-aside p {
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(2, 11, 20, 0.78);
 }
 
 .contact-aside .aside-lines {
@@ -1215,7 +1183,7 @@ textarea {
 
 .contact-aside .aside-lines span {
   border-color: rgba(255, 255, 255, 0.22);
-  color: var(--paper);
+  color: var(--blueprint-deep);
 }
 
 .contact-panel.standalone {
@@ -1239,7 +1207,10 @@ textarea {
   }
 
   .hero-media::before {
-    background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.92) 48%, rgba(255, 255, 255, 0.66) 100%);
+    background:
+      linear-gradient(180deg, rgba(2, 11, 20, 0.98) 0%, rgba(2, 11, 20, 0.88) 52%, rgba(2, 11, 20, 0.74) 100%),
+      linear-gradient(135deg, rgba(184, 255, 18, 0.14) 1px, transparent 1px);
+    background-size: auto, 36px 36px;
   }
 
   .hero-grid,

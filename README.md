@@ -4,11 +4,11 @@ Static, self-contained website prototype for `properly.sk`.
 
 ## Design System
 
-- Danube Slate `#18313A`: primary brand text and navigation.
-- Registry Blue `#2F6F83`: trusted actions, process states, and links.
-- Limestone `#F3F5F2`: cool neutral section bands.
-- Copper Roof `#B85F3E`: restrained accent inspired by Bratislava rooflines.
-- Paper White `#FFFFFF`, Mist Border `#D7DED8`, Charcoal Ink `#202624`.
+- Blueprint Deep `#020B14`: primary site background.
+- Blueprint Navy `#001421`: dark architectural surfaces and map areas.
+- Properly Purple `#B45DFF`: brand wordmark, headings, and primary actions.
+- Properly Lime `#B8FF12`: dot/accent color, active states, verification rail, and sample badges.
+- Surface Navy `#071824`, Mist Border `#244252`, Light Ink `#F4F8FF`.
 
 The signature visual element is the verified ribbon rail: a process line for ownership check, factual presentation, and legal close.
 
