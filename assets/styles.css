@@ -17,7 +17,38 @@
   --muted: #94A3B8;                  /* Cool slate gray for secondary descriptions/labels */
   --line: rgba(180, 245, 0, 0.15);   /* Updated line overlays with a subtle electric lime glow hint */
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.5); /* Deep dark shadow for floating layers instead of light teal */
-  
+  /* 1. Force the Header/Navigation Area to be Dark */
+header, .nav-container, .top-bar {
+  background-color: #07111A !important; /* Matches the dark background */
+}
+
+/* Fix navigation link colors so they are readable on dark background */
+.nav-container a, header a, .language-switcher a {
+  color: #FFFFFF !important;
+}
+
+/* 2. Fix the Main Headings (Make them crisp White or soft Purple) */
+h1, .hero h1, h1.title {
+  color: #FFFFFF !important; /* Forces "Nehnuteľnosti v Bratislave" to be bright white */
+}
+
+h2, h3 {
+  color: #A358E8 !important; /* Subheadings turn your brand purple */
+}
+
+/* 3. Fix the Outline Buttons (Prenájom, Byty, Domy, etc.) */
+.filter-button, .btn-outline {
+  border-color: #A358E8 !important; /* Purple border */
+  color: #FFFFFF !important;        /* White text so you can read it! */
+  background: transparent;
+}
+
+/* Smooth transition when hovering over unselected buttons */
+.filter-button:hover, .btn-outline:hover {
+  background-color: #B4F500 !important; /* Turns lime on hover */
+  color: #000000 !important;            /* Text turns black on lime for contrast */
+  border-color: #B4F500 !important;
+}
   /* Layout constraints (Keep exactly as they are) */
   --radius: 8px;
   --container: 1180px;
