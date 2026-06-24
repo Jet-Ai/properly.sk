@@ -23,6 +23,18 @@
   --container: 1180px;
   --heading: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
   --body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Fix the invisible text inside the search card toggle buttons */
+.search-widget button, 
+.search-type-toggle button,
+[class*="search"] button {
+  color: #FFFFFF !important; /* Forces the text to be crisp white */
+}
+
+/* Fix text contrast for the paragraph description in the hero section */
+.hero p, .hero-content p, .intro-text {
+  color: #111D29 !important; /* Darkens the paragraph text over the white gradient for crisp legibility */
+  font-weight: 500;
+}
 }
 
 /* ==========================================================================
