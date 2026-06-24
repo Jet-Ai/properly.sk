@@ -1,15 +1,24 @@
 :root {
-  --danube-slate: #18313a;
-  --registry-blue: #2f6f83;
-  --registry-blue-dark: #1f586b;
-  --limestone: #f3f5f2;
-  --copper-roof: #b85f3e;
-  --paper: #ffffff;
-  --mist-border: #d7ded8;
-  --charcoal: #202624;
-  --muted: #647178;
-  --line: rgba(24, 49, 58, 0.15);
-  --shadow: 0 20px 60px rgba(24, 49, 58, 0.12);
+  /* Brand Colors from Logo */
+  --purple-primary: #A358E8;         /* Main logo text color */
+  --lime-accent: #B4F500;            /* The vibrant lime accent dot */
+  
+  /* The New Dark Structural System */
+  --danube-slate: #07111A;           /* Swapped from deep teal to dark midnight blueprint background */
+  --registry-blue: #A358E8;          /* Swapped to your brand purple for primary actions/links */
+  --registry-blue-dark: #7E3BB8;     /* Deeper purple variant for button hover states */
+  --limestone: #111D29;              /* Swapped to a slightly lighter dark-blue for structural sections/cards */
+  --copper-roof: #B4F500;            /* Swapped the accent color token entirely to the electric lime */
+  
+  /* Borders and Typography Controls */
+  --paper: #0D1924;                  /* Swapped from white to a dark card component background */
+  --mist-border: #1C3322;            /* Subdued architectural blueprint-line color for dividing borders */
+  --charcoal: #FFFFFF;               /* Swapped from dark gray to crisp white for your primary headers */
+  --muted: #94A3B8;                  /* Cool slate gray for secondary descriptions/labels */
+  --line: rgba(180, 245, 0, 0.15);   /* Updated line overlays with a subtle electric lime glow hint */
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.5); /* Deep dark shadow for floating layers instead of light teal */
+  
+  /* Layout constraints (Keep exactly as they are) */
   --radius: 8px;
   --container: 1180px;
   --heading: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
