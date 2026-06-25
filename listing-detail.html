@@ -124,7 +124,11 @@
           const csvText = await response.text();
           const properties = parseCSV(csvText);
           
-          const item = properties.find(p => String(p.ID).trim() === String(propertyId).trim());
+         const item = properties.find(p => {
+  const recordId = String(p.ID || p.id || '').trim().toLowerCase();
+  const searchId = String(propertyId || '').trim().toLowerCase();
+  return recordId === searchId && recordId !== '';
+});
           
           if (item) {
             document.getElementById('detail-title').textContent = item.Title || 'Bez názvu';
