@@ -34,7 +34,7 @@
       <section class="page-hero">
         <div class="container compact-hero">
           <h1 data-i18n="listingsPageTitle">Ponuka nehnuteľností</h1>
-          <p data-i18n="listingsPageText">Aktuálna a živá ponuka spravovaná priamo z Google tabuľky.</p>
+          <p data-i18n="listingsPageText">Grid a filtre sú pripravené pre 20+ reálnych záznamov z jednoduchého backendu. Aktuálne položky sú označené ako ukážkové dáta.</p>
         </div>
       </section>
 
@@ -44,15 +44,15 @@
             <label>
               <span data-i18n="filterMode">Režim</span>
               <select name="mode">
-                <option value="">Všetko</option>
-                <option value="kúpa">Kúpiť</option>
-                <option value="prenájom">Prenajať</option>
+                <option value="" data-i18n="filterAll">Všetko</option>
+                <option value="buy" data-i18n="tabBuy">Kúpiť</option>
+                <option value="rent" data-i18n="tabRent">Prenajať</option>
               </select>
             </label>
             <label>
               <span data-i18n="fieldLocation">Lokalita</span>
               <select name="location">
-                <option value="">Akákoľvek lokalita</option>
+                <option value="" data-i18n="filterAnyLocation">Akákoľvek lokalita</option>
                 <option value="Bratislava - Staré Mesto">Bratislava - Staré Mesto</option>
                 <option value="Bratislava - Devín">Bratislava - Devín</option>
                 <option value="Bratislava - Ružinov">Bratislava - Ružinov</option>
@@ -61,9 +61,18 @@
               </select>
             </label>
             <label>
+              <span data-i18n="fieldType">Typ</span>
+              <select name="type">
+                <option value="" data-i18n="filterAnyType">Akýkoľvek typ</option>
+                <option value="apartment" data-i18n="typeApartment">Byt</option>
+                <option value="house" data-i18n="typeHouse">Dom</option>
+                <option value="commercial" data-i18n="typeCommercial">Komerčné</option>
+              </select>
+            </label>
+            <label>
               <span data-i18n="fieldPrice">Cena do</span>
               <select name="price">
-                <option value="">Bez limitu</option>
+                <option value="" data-i18n="filterAnyPrice">Bez limitu</option>
                 <option value="250000">250 000 €</option>
                 <option value="500000">500 000 €</option>
                 <option value="750000">750 000 €</option>
@@ -71,8 +80,8 @@
             </label>
           </form>
           <div class="listing-toolbar">
-            <p id="listingCount" aria-live="polite">Načítavam nehnuteľnosti...</p>
-            <p class="sample-note" data-i18n="sheetReady">Prepojené live s Google Sheets databázou.</p>
+            <p id="listingCount" aria-live="polite"></p>
+            <p class="sample-note" data-i18n="sheetReady">Dátový model je pripravený na napojenie na Google Sheet alebo jednoduché API.</p>
           </div>
           <div class="listing-grid expanded" id="listingsGrid"></div>
         </div>
@@ -86,122 +95,6 @@
         <a class="footer-domain" href="index.html">properly.sk</a>
       </div>
     </footer>
-    
     <script src="assets/site.js"></script>
-
-    <script>
-      const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5iengHAyXXtKD2RbnOQiFzk_d9wAI3FjnFrAFlfxNlVPp1X_cxfpFRIioVmPTQ3qfyUluLjcPopVw/pub?output=csv';
-      let allProperties = [];
-
-      function parseCSV(text) {
-        const lines = text.split('\n').filter(line => line.trim() !== '');
-        if (lines.length === 0) return [];
-        
-        // Auto-detect delimiter: handles both tab-separated arrays and comma formats natively
-        const delimiter = lines[0].includes('\t') ? '\t' : ',';
-        const headers = lines[0].split(delimiter).map(h => h.trim().replace(/["'\r]/g, ''));
-        
-        return lines.slice(1).map(line => {
-          let values;
-          if (delimiter === '\t') {
-            values = line.split('\t').map(v => v.trim().replace(/["'\r]/g, ''));
-          } else {
-            values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.trim().replace(/["'\r]/g, ''));
-          }
-          
-          const obj = {};
-          headers.forEach((header, i) => {
-            obj[header] = values[i] || '';
-          });
-          return obj;
-        });
-      }
-
-      function renderProperties(properties) {
-        const gridElement = document.getElementById('listingsGrid');
-        const countElement = document.getElementById('listingCount');
-        gridElement.innerHTML = '';
-        
-        countElement.textContent = `Nájdených: ${properties.length} nehnuteľností`;
-
-        if (properties.length === 0) {
-          gridElement.innerHTML = `<p style="grid-column: 1/-1; color: var(--muted); padding: 3rem 0; text-align: center;">Žiadne nehnuteľnosti nevyhovujú zvoleným kritériám.</p>`;
-          return;
-        }
-
-        properties.forEach(item => {
-          const rawPrice = parseInt(item.Price) || 0;
-          const formattedPrice = rawPrice > 0 ? rawPrice.toLocaleString('sk-SK') + (item.Status.toLowerCase() === 'prenájom' ? ' / mes' : ' €') : 'Cena na vyžiadanie';
-          const displayImage = item.ImageURL1 || item.ImageURL || 'assets/images/placeholder.jpg';
-          
-          const propertyHtml = `
-            <article class="property-card" style="background: var(--paper); border: 1px solid var(--mist-border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow);">
-              <div class="card-image-wrapper" style="position: relative; width: 100%; height: 240px; overflow: hidden;">
-                <img src="${displayImage}" alt="${item.Title || 'Bez názvu'}" style="width: 100%; height: 100%; object-fit: cover;">
-                <span class="badge" style="position: absolute; top: 1rem; left: 1rem; background-color: var(--lime-accent); color: #000000; font-weight: bold; padding: 0.35rem 0.75rem; border-radius: 4px; font-size: 0.85rem; text-transform: uppercase;">
-                  ${item.Status || 'Kúpa'}
-                </span>
-              </div>
-              <div class="card-content" style="padding: 1.5rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                  <h3 style="color: var(--purple-primary); margin: 0 0 0.5rem 0; font-family: var(--heading); font-size: 1.35rem;">${item.Title || 'Bez názvu'}</h3>
-                  <p class="location" style="color: var(--muted); font-size: 0.95rem; margin: 0 0 1.25rem 0;">📍 ${item.Location || 'Neznáma lokalita'}</p>
-                  
-                  <div class="specs" style="display: flex; gap: 1.25rem; color: #FFFFFF; font-size: 0.9rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                    <span>🛏️ ${item.Beds || 0} izb</span>
-                    <span>🚿 ${item.Baths || 0} kúp</span>
-                    <span>📐 ${item.SquareMeters || 0} m²</span>
-                  </div>
-                </div>
-                
-                <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
-                  <span class="price" style="font-size: 1.3rem; font-weight: bold; color: #FFFFFF;">${formattedPrice}</span>
-                  <a href="listing-detail.html?id=${String(item.ID || '').trim()}" class="btn-outline" style="border: 1px solid var(--purple-primary); color: #FFF; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px; font-size: 0.9rem; font-weight: 500; transition: all 0.2s ease;">Pozrieť detail</a>
-                </div>
-              </div>
-            </article>
-          `;
-          gridElement.insertAdjacentHTML('beforeend', propertyHtml);
-        });
-      }
-
-      function filterProperties() {
-        const form = document.getElementById('listingFilters');
-        const modeFilter = form.elements['mode'].value.toLowerCase();
-        const locationFilter = form.elements['location'].value;
-        const priceFilter = form.elements['price'].value;
-
-        const filtered = allProperties.filter(item => {
-          const matchesMode = !modeFilter || (item.Status && item.Status.toLowerCase() === modeFilter);
-          const matchesLocation = !locationFilter || item.Location === locationFilter;
-          
-          let matchesPrice = true;
-          if (priceFilter) {
-            const itemPrice = parseInt(item.Price) || 0;
-            matchesPrice = itemPrice <= parseInt(priceFilter);
-          }
-
-          return matchesMode && matchesLocation && matchesPrice;
-        });
-
-        renderProperties(filtered);
-      }
-
-      async function initDataEngine() {
-        try {
-          const response = await fetch(spreadsheetUrl);
-          const csvText = await response.text();
-          allProperties = parseCSV(csvText);
-          renderProperties(allProperties);
-
-          document.getElementById('listingFilters').addEventListener('change', filterProperties);
-        } catch (error) {
-          console.error('Data pipeline error:', error);
-          document.getElementById('listingsGrid').innerHTML = `<p style="grid-column:1/-1; color: red; text-align:center;">Chyba pri sťahovaní ponuky z Google databázy.</p>`;
-        }
-      }
-
-      window.addEventListener('DOMContentLoaded', initDataEngine);
-    </script>
   </body>
 </html>
