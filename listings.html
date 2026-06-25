@@ -89,13 +89,13 @@
     
     <script src="assets/site.js"></script>
 
-    <!-- LIVE GOOGLE SPREADSHEET ENGINE -->
     <script>
       const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5iengHAyXXtKD2RbnOQiFzk_d9wAI3FjnFrAFlfxNlVPp1X_cxfpFRIioVmPTQ3qfyUluLjcPopVw/pub?output=csv';
       let allProperties = [];
 
       function parseCSV(text) {
         const lines = text.split('\n').filter(line => line.trim() !== '');
+        if (lines.length === 0) return [];
         const headers = lines[0].split(',').map(h => h.trim().replace(/["'\r]/g, ''));
         
         return lines.slice(1).map(line => {
@@ -122,31 +122,32 @@
 
         properties.forEach(item => {
           const rawPrice = parseInt(item.Price) || 0;
-          const formattedPrice = rawPrice.toLocaleString('sk-SK') + (item.Status.toLowerCase() === 'prenájom' ? ' / mes' : ' €');
+          const formattedPrice = rawPrice > 0 ? rawPrice.toLocaleString('sk-SK') + (item.Status.toLowerCase() === 'prenájom' ? ' / mes' : ' €') : 'Cena na vyžiadanie';
+          const displayImage = item.ImageURL1 || item.ImageURL || 'assets/images/placeholder.jpg';
           
           const propertyHtml = `
             <article class="property-card" style="background: var(--paper); border: 1px solid var(--mist-border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow);">
               <div class="card-image-wrapper" style="position: relative; width: 100%; height: 240px; overflow: hidden;">
-                <img src="${item.ImageURL || 'assets/images/placeholder.jpg'}" alt="${item.Title}" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="${displayImage}" alt="${item.Title}" style="width: 100%; height: 100%; object-fit: cover;">
                 <span class="badge" style="position: absolute; top: 1rem; left: 1rem; background-color: var(--lime-accent); color: #000000; font-weight: bold; padding: 0.35rem 0.75rem; border-radius: 4px; font-size: 0.85rem; text-transform: uppercase;">
-                  ${item.Status}
+                  ${item.Status || 'Kúpa'}
                 </span>
               </div>
               <div class="card-content" style="padding: 1.5rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                  <h3 style="color: var(--purple-primary); margin: 0 0 0.5rem 0; font-family: var(--heading); font-size: 1.35rem;">${item.Title}</h3>
-                  <p class="location" style="color: var(--muted); font-size: 0.95rem; margin: 0 0 1.25rem 0;">📍 ${item.Location}</p>
+                  <h3 style="color: var(--purple-primary); margin: 0 0 0.5rem 0; font-family: var(--heading); font-size: 1.35rem;">${item.Title || 'Bez názvu'}</h3>
+                  <p class="location" style="color: var(--muted); font-size: 0.95rem; margin: 0 0 1.25rem 0;">📍 ${item.Location || 'Neznáma lokalita'}</p>
                   
                   <div class="specs" style="display: flex; gap: 1.25rem; color: #FFFFFF; font-size: 0.9rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                    <span>🛏️ ${item.Beds} izb</span>
-                    <span>🚿 ${item.Baths} kúp</span>
-                    <span>📐 ${item.SquareMeters} m²</span>
+                    <span>🛏️ ${item.Beds || 0} izb</span>
+                    <span>🚿 ${item.Baths || 0} kúp</span>
+                    <span>📐 ${item.SquareMeters || 0} m²</span>
                   </div>
                 </div>
                 
                 <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
                   <span class="price" style="font-size: 1.3rem; font-weight: bold; color: #FFFFFF;">${formattedPrice}</span>
-                  <a href="listing-detail.html?id=${item.ID}" class="btn-outline" style="border: 1px solid var(--purple-primary); color: #FFF; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px; font-size: 0.9rem; font-weight: 500; transition: all 0.2s ease;">Pozrieť detail</a>
+                  <a href="listing-detail.html?id=${String(item.ID).trim()}" class="btn-outline" style="border: 1px solid var(--purple-primary); color: #FFF; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px; font-size: 0.9rem; font-weight: 500; transition: all 0.2s ease;">Pozrieť detail</a>
                 </div>
               </div>
             </article>
@@ -162,7 +163,7 @@
         const priceFilter = form.elements['price'].value;
 
         const filtered = allProperties.filter(item => {
-          const matchesMode = !modeFilter || item.Status.toLowerCase() === modeFilter;
+          const matchesMode = !modeFilter || (item.Status && item.Status.toLowerCase() === modeFilter);
           const matchesLocation = !locationFilter || item.Location === locationFilter;
           
           let matchesPrice = true;
@@ -184,7 +185,6 @@
           allProperties = parseCSV(csvText);
           renderProperties(allProperties);
 
-          // Listen closely to the drop-down selectors to re-filter immediately
           document.getElementById('listingFilters').addEventListener('change', filterProperties);
         } catch (error) {
           console.error('Data pipeline error:', error);
