@@ -103,18 +103,108 @@
   }
 
   window.addEventListener('DOMContentLoaded', loadDetailPage);
+<!-- AUTOMATED DATA INTEGRATION FOR DETAILS GRID -->
+<script>
+  const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5iengHAyXXtKD2RbnOQiFzk_d9wAI3FjnFrAFlfxNlVPp1X_cxfpFRIioVmPTQ3qfyUluLjcPopVw/pub?output=csv';
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const propertyId = urlParams.get('id');
+
+  // Upgraded parser to split by commas or tabs automatically
+  function parseCSV(text) {
+    const lines = text.split('\n').filter(line => line.trim() !== '');
+    
+    // Auto-detect delimiter: check if the first line uses tabs or commas
+    const delimiter = lines[0].includes('\t') ? '\t' : ',';
+    
+    const headers = lines[0].split(delimiter).map(h => h.trim().replace(/["'\r]/g, ''));
+    
+    return lines.slice(1).map(line => {
+      let values;
+      if (delimiter === '\t') {
+        values = line.split('\t').map(v => v.trim().replace(/["'\r]/g, ''));
+      } else {
+        values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.trim().replace(/["'\r]/g, ''));
+      }
+      
+      const obj = {};
+      headers.forEach((header, i) => { 
+        obj[header] = values[i] || ''; 
+      });
+      return obj;
+    });
+  }
+
+  async function loadDetailPage() {
+    if (!propertyId) {
+      document.getElementById('detailRoot').innerHTML = `<div class="container" style="text-align:center; padding: 4rem;"><p style="color:var(--muted);">Kód nehnuteľnosti chýba (No Property ID provided).</p></div>`;
+      return;
+    }
+
+    try {
+      const response = await fetch(spreadsheetUrl);
+      const csvText = await response.text();
+      const properties = parseCSV(csvText);
+      
+      // Target the matching listing from your spreadsheet row
+      const item = properties.find(p => String(p.ID).trim() === String(propertyId).trim());
+      
+      if (item) {
+        // Populate text elements completely matching she/admin inputs
+        document.getElementById('detail-title').textContent = item.Title || 'Bez názvu';
+        document.getElementById('detail-location').textContent = item.Location ? `Bratislava - ${item.Location.replace('Bratislava - ', '')}` : '📍 Neznáma lokalita';
+        document.getElementById('detail-status').textContent = item.Status || 'Kúpa';
+        
+        document.getElementById('spec-beds').textContent = `🛏️ ${item.Beds || 0} izby`;
+        document.getElementById('spec-baths').textContent = `🚿 ${item.Baths || 0} kúp.`;
+        document.getElementById('spec-size').textContent = `📐 ${item.SquareMeters || 0} m²`;
+        
+        const rawPrice = parseInt(item.Price) || 0;
+        document.getElementById('detail-price').textContent = rawPrice > 0 ? rawPrice.toLocaleString('sk-SK') + (item.Status.toLowerCase() === 'prenájom' ? ' / mesiac' : ' €') : 'Cena na vyžiadanie';
+        
+        // Image parsing pipeline extracting columns mapping directly to image_f82f7a.png
+        const images = [
+          item.ImageURL1 || item.ImageURL, 
+          item.ImageURL2, 
+          item.ImageURL3, 
+          item.ImageURL4
+        ].filter(url => url && url.trim().startsWith('http'));
+
+        const mainImg = document.getElementById('detail-main-img');
+        const thumbContainer = document.getElementById('detail-thumbnails');
+        
+        if (images.length > 0) {
+          mainImg.src = images[0];
+          thumbContainer.innerHTML = '';
+
+          if (images.length > 1) {
+            images.forEach((url, index) => {
+              const thumb = document.createElement('img');
+              thumb.src = url;
+              thumb.style = "width: 90px; height: 65px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease;";
+              
+              if (index === 0) thumb.style.borderColor = "var(--purple-primary)";
+              
+              thumb.addEventListener('click', () => {
+                mainImg.src = url;
+                Array.from(thumbContainer.children).forEach(el => el.style.borderColor = "transparent");
+                thumb.style.borderColor = "var(--purple-primary)";
+              });
+              
+              thumbContainer.appendChild(thumb);
+            });
+          }
+        }
+      } else {
+        document.getElementById('detailRoot').innerHTML = `<div class="container" style="text-align:center; padding: 4rem;"><p style="color:var(--muted);">Nehnuteľnosť s ID ${propertyId} sa nenašla v tabuľke.</p></div>`;
+      }
+    } catch (error) {
+      console.error('Connection pipeline error:', error);
+      document.getElementById('detailRoot').innerHTML = `<div class="container" style="text-align:center; padding: 4rem;"><p style="color:red;">Chyba pri pripájaní na databázu.</p></div>`;
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', loadDetailPage);
 </script>
-    </header>
-
-    <main id="detailRoot"></main>
-
-    <footer class="site-footer">
-      <div class="container footer-grid">
-        <a class="brand footer-brand" href="index.html" aria-label="Properly home"><svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true"><path d="M8 34V15L21 7l13 8v19" /><path d="M15 34V18.5l6-3.6 6 3.6v5.7H20" /><path d="M20 24.2h7c4.5 0 7 2.6 7 6.1 0 3.6-2.7 6.1-7.2 6.1H15" /></svg><span>Properly</span></a>
-        <nav aria-label="Footer navigation"><a href="listings.html" data-i18n="navListings">Ponuka</a><a href="about.html" data-i18n="navAbout">O nás</a><a href="contact.html" data-i18n="navContact">Kontakt</a></nav>
-        <a class="footer-domain" href="index.html">properly.sk</a>
-      </div>
-    </footer>
-    <script src="assets/site.js"></script>
   </body>
 </html>
