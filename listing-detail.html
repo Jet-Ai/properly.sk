@@ -30,31 +30,27 @@
       </div>
     </header>
 
-    <main id="detailRoot" style="padding: 3rem 0; min-height: 70vh; font-family: var(--body); color: #FFFFFF;">
+<main id="detailRoot" style="padding: 3rem 0; min-height: 70vh; font-family: var(--body); color: #FFFFFF;">
       <div class="container" style="max-width: var(--container); margin: 0 auto; padding: 0 1rem;">
         
         <a href="listings.html" style="color: var(--lime-accent); text-decoration: none; display: inline-block; margin-bottom: 2rem; font-weight: 500;">
           ← Späť na ponuku
         </a>
 
-        <!-- Structural Split Page Grid Layer -->
         <div class="detail-split" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start;">
           
-          <!-- LEFT SIDE: Dynamic Component Photo Gallery Matrix -->
           <div class="gallery-container">
             <div class="main-stage-image">
               <img id="detail-main-img" src="assets/images/placeholder.jpg" alt="Property view" style="width: 100%; height: 480px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--mist-border);">
             </div>
-            <!-- Thumbnails strip layer -->
             <div id="detail-thumbnails" style="display: flex; gap: 0.75rem; margin-top: 1rem; overflow-x: auto; padding-bottom: 0.5rem;"></div>
           </div>
 
-          <!-- RIGHT SIDE: Information Content Panel -->
           <div class="info-panel" style="background: var(--paper); border: 1px solid var(--mist-border); padding: 2.5rem; border-radius: var(--radius); box-shadow: var(--shadow);">
             <span id="detail-status" style="background-color: var(--lime-accent); color: #000000; font-weight: bold; padding: 0.35rem 0.75rem; border-radius: 4px; font-size: 0.85rem; text-transform: uppercase; display: inline-block; margin-bottom: 1rem;">
               ...
             </span>
-            <h1 id="detail-title" style="color: var(--purple-primary); margin: 0 0 0.5rem 0; font-family: var(--heading); font-size: 2.2rem; line-height: 1.2;">Načítavam detaily...</h1>
+            <h1 id="detail-title" style="color: var(--purple-primary); margin: 0 0 0.5rem 0; font-family: var(--heading); font-size: 2.2rem; line-height: 1.2;">Načítavam...</h1>
             <p id="detail-location" style="color: var(--muted); font-size: 1.1rem; margin: 0 0 2rem 0;">📍 ...</p>
             
             <div id="detail-specs" style="display: flex; gap: 2rem; font-size: 1.05rem; margin-bottom: 2rem; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08);">
