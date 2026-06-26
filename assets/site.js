@@ -965,18 +965,70 @@ function hydrateListingFiltersFromUrl() {
   });
 }
 
+// ... (všetky preklady a premenné na začiatku súboru zostávajú nezmenené)
+
 function bindForms() {
   document.querySelectorAll("[data-contact-form]").forEach((form) => {
     if (form.dataset.bound === "true") return;
     form.dataset.bound = "true";
+    
     form.addEventListener("submit", (event) => {
       event.preventDefault();
+      
+      // Vytiahnutie hodnôt z formulára
+      const name = form.querySelector('[name="name"]')?.value.trim() || '';
+      const email = form.querySelector('[name="email"]')?.value.trim() || '';
+      const phone = form.querySelector('[name="phone"]')?.value.trim() || 'Nezadané';
+      const message = form.querySelector('[name="message"]')?.value.trim() || '';
+      
+      // Zistenie typu záujmu (ak existuje select na kontaktnej stránke)
+      const interestSelect = form.querySelector('[name="interest"]');
+      let interestText = "";
+      if (interestSelect) {
+        interestText = interestSelect.options[interestSelect.selectedIndex].text;
+      }
+
+      // Cieľové telefónne číslo pre Properly
+      const targetPhone = "421917962233";
+
+      // Vytvorenie štruktúrovanej WhatsApp správy
+      let whatsappMessage = `🏡 *PROPERLY.SK - NOVÝ DOPYT* 🏡\n\n` +
+                              `👤 *Meno:* ${name}\n` +
+                              `✉️ *Email:* ${email}\n` +
+                              `📞 *Telefón:* ${phone}\n`;
+      
+      if (interestText) {
+        whatsappMessage += `📋 *Typ záujmu:* ${interestText}\n`;
+      }
+      
+      whatsappMessage += `\n💬 *Správa:* \n"${message}"`;
+
+      const encodedText = encodeURIComponent(whatsappMessage);
+
+      // Detekcia zariadenia pre správne smerovanie na mobil alebo desktop web
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      const finalUrl = isMobileDevice
+        ? `https://wa.me/${targetPhone}?text=${encodedText}`
+        : `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodedText}`;
+
+      // Aktualizácia stavu formulára na stránke
       const status = form.querySelector(".form-status");
-      if (status) status.textContent = t("formSent");
+      if (status) {
+        status.style.color = "var(--accent)";
+        status.textContent = currentLang === "sk" ? "Presmerovanie na WhatsApp..." : "Redirecting to WhatsApp...";
+      }
+
+      // Otvorenie WhatsApp v novom okne
+      window.open(finalUrl, '_blank', 'noopener,noreferrer');
+      
+      // Resetovanie formulára po odoslaní
       form.reset();
     });
   });
 }
+
+// ... (zvyšok funkcií init a event listenerov na konci súboru zostáva nezmenený)
 
 async function init() {
   bindLanguageSwitcher();
