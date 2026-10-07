@@ -1,0 +1,19 @@
+{
+  "name": "properly-listings-api",
+  "main": "entry.mjs",
+  "compatibility_date": "2026-10-07",
+  "workers_dev": true,
+  "durable_objects": {
+    "bindings": [{ "name": "REFRESH_COORDINATOR", "class_name": "RefreshCoordinator" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RefreshCoordinator"] }],
+  "vars": {
+    "COLLECTION_ENABLED": "false",
+    "WRITTEN_PERMISSION_CONFIRMED": "false",
+    "ALLOWED_ORIGINS": "https://properly.sk,https://www.properly.sk,https://jet-ai.github.io"
+  },
+  // Add the real namespace binding after creating it in your Cloudflare account:
+  // "kv_namespaces": [{ "binding": "LISTING_CACHE", "id": "YOUR_REAL_NAMESPACE_ID" }],
+  // No scheduled collection is enabled until written permission is obtained.
+  "triggers": { "crons": [] }
+}

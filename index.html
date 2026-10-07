@@ -6,7 +6,7 @@
     <title>Properly | Property, done properly.</title>
     <meta name="description" content="Properly je realitná kancelária pre overené nehnuteľnosti v Bratislave a okolí.">
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/styles.css?v=real-offers-20261007">
   </head>
   <body data-page="home">
     <header class="site-header">
@@ -57,9 +57,8 @@
                 <span data-i18n="fieldLocation">Lokalita</span>
                 <select name="location">
                   <option value="" data-i18n="optionLocation">Vyberte lokalitu</option>
-                  <option value="Bratislava - Staré Mesto">Bratislava - Staré Mesto</option>
-                  <option value="Bratislava - Devín">Bratislava - Devín</option>
-                  <option value="Bratislava - Ružinov">Bratislava - Ružinov</option>
+                  <option value="Bratislava-Devín">Bratislava-Devín</option>
+                  <option value="Bratislava-Ružinov">Bratislava-Ružinov</option>
                 </select>
               </label>
               <label>
@@ -67,7 +66,7 @@
                 <select name="type">
                   <option value="" data-i18n="optionType">Vyberte typ</option>
                   <option value="apartment" data-i18n="typeApartment">Byt</option>
-                  <option value="house" data-i18n="typeHouse">Dom</option>
+                  <option value="cottage" data-i18n="typeCottage">Chata</option>
                   <option value="commercial" data-i18n="typeCommercial">Komerčné</option>
                 </select>
               </label>
@@ -82,7 +81,7 @@
               </label>
               <button class="button primary" type="submit" data-i18n="searchButton">Vyhľadať</button>
             </div>
-            <p class="sample-note" data-i18n="sampleNote">Vzorkové dáta označené. Ceny a miesta sa nemenia podľa jazyka.</p>
+            <p class="source-note" data-i18n="searchNote">Ponuky Miriam Bartošovičovej v Bratislave.</p>
           </form>
         </div>
       </section>
@@ -130,11 +129,12 @@
             <button class="is-active" type="button" data-feature-filter="buy" data-i18n="chipBuy">Kúpa</button>
             <button type="button" data-feature-filter="rent" data-i18n="chipRent">Prenájom</button>
             <button type="button" data-feature-filter="apartment" data-i18n="chipApartments">Byty</button>
-            <button type="button" data-feature-filter="house" data-i18n="chipHouses">Domy</button>
+            <button type="button" data-feature-filter="cottage" data-i18n="chipCottages">Chaty</button>
             <button type="button" data-feature-filter="commercial" data-i18n="chipCommercial">Komerčné</button>
           </div>
           <div class="listing-grid" id="featuredListings"></div>
-          <p class="center-note" data-i18n="recordsNote">Ukážkové záznamy pre návrh rozhrania. Reálne ponuky sa načítajú z backendu.</p>
+          <p class="center-note" data-i18n="recordsNote">Údaje z Nehnuteľnosti.sk k 07.10.2026. Aktuálnu dostupnosť potvrďte s maklérkou.</p>
+          <p class="center-note" data-source-status role="status" hidden></p>
         </div>
       </section>
 
@@ -242,6 +242,7 @@
       </div>
     </footer>
 
-    <script src="assets/site.js"></script>
+    <script src="assets/config.js?v=real-offers-20261007"></script>
+    <script src="assets/site.js?v=real-offers-20261007"></script>
   </body>
 </html>

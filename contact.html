@@ -6,7 +6,7 @@
     <title>Kontakt | Properly</title>
     <meta name="description" content="Kontaktujte Properly pre kúpu, predaj alebo prenájom nehnuteľnosti v Bratislave a okolí.">
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/styles.css?v=real-offers-20261007">
   </head>
   <body data-page="contact">
     <header class="site-header">
@@ -26,7 +26,7 @@
         <div class="container contact-page-grid">
           <div class="contact-aside">
             <h2 data-i18n="contactAsideTitle">Transparentne od prvého hovoru</h2>
-            <p data-i18n="contactAsideText">Prvé posúdenie sa zameria na lokalitu, právny stav, očakávania a reálnu prezentáciu nehnuteľnosti. Všetky vzorkové údaje v tomto návrhu sú označené.</p>
+            <p data-i18n="contactAsideText">Prvé posúdenie sa zameria na lokalitu, právny stav, očakávania a reálnu prezentáciu nehnuteľnosti.</p>
             <div class="aside-lines">
               <span data-i18n="serviceResidential">Rezidenčné</span>
               <span data-i18n="serviceCommercial">Komerčné</span>
@@ -56,76 +56,7 @@
         <a class="footer-domain" href="index.html">properly.sk</a>
       </div>
     </footer>
-    <script src="assets/site.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const contactForm = document.querySelector('[data-contact-form]');
-        
-        if (contactForm) {
-          const clonedForm = contactForm.cloneNode(true);
-          contactForm.parentNode.replaceChild(clonedForm, contactForm);
-          
-          clonedForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // 1. Zistenie aktívneho jazyka z localStorage
-            const currentLang = localStorage.getItem("properlyLang") || "sk";
-            
-            // 2. Slovník prekladov pre WhatsApp správu podla jazyka webu
-            const wsTranslations = {
-              sk: { header: "NOVÝ DOPYT", name: "Meno", phone: "Telefón", interest: "Typ záujmu", msg: "Správa", redirect: "Presmerovanie na WhatsApp...", notSet: "Nezadané" },
-              en: { header: "NEW INQUIRY", name: "Name", phone: "Phone", interest: "Interest type", msg: "Message", redirect: "Redirecting to WhatsApp...", notSet: "Not provided" },
-              tr: { header: "YENİ TALEP", name: "Ad", phone: "Telefon", interest: "İlgi türü", msg: "Mesaj", redirect: "WhatsApp'a yönlendiriliyor...", notSet: "Belirtilmedi" },
-              ru: { header: "НОВЫЙ ЗАПРОС", name: "Имя", phone: "Телефон", interest: "Тип интереса", msg: "Сообщение", redirect: "Перенаправление на WhatsApp...", notSet: "Не указано" }
-            };
-            
-            const lang = wsTranslations[currentLang] || wsTranslations.sk;
-            
-            // 3. Vytiahnutie dát z formulára
-            const name = this.querySelector('[name="name"]')?.value.trim() || '';
-            const email = this.querySelector('[name="email"]')?.value.trim() || '';
-            const phone = this.querySelector('[name="phone"]')?.value.trim() || lang.notSet;
-            const message = this.querySelector('[name="message"]')?.value.trim() || '';
-            
-            const interestSelect = this.querySelector('[name="interest"]');
-            let interestText = "";
-            if (interestSelect && interestSelect.selectedIndex !== -1) {
-              interestText = interestSelect.options[interestSelect.selectedIndex].text;
-            }
-
-            const targetPhone = "421917962233";
-
-            // 4. Poskladanie správy s opravenými zalomeniami riadkov (\n)
-            let whatsappMessage = `🏡 *PROPERLY.SK - ${lang.header}* 🏡\n\n` +
-                                  `👤 *${lang.name}:* ${name}\n` +
-                                  `✉️ *Email:* ${email}\n` +
-                                  `📞 *${lang.phone}:* ${phone}\n`;
-            
-            if (interestText && interestSelect.value !== "") {
-              whatsappMessage += `📋 *${lang.interest}:* ${interestText}\n`;
-            }
-            
-            whatsappMessage += `\n💬 *${lang.msg}:*\n"${message}"`;
-
-            const encodedText = encodeURIComponent(whatsappMessage);
-
-            // 5. Smerovanie na mobilnú aplikáciu alebo web rozhranie
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            const finalUrl = isMobile
-              ? `https://wa.me/${targetPhone}?text=${encodedText}`
-              : `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodedText}`;
-
-            const statusLabel = this.querySelector('.form-status');
-            if (statusLabel) {
-              statusLabel.style.color = "#a3cfbb";
-              statusLabel.textContent = lang.redirect;
-            }
-
-            window.open(finalUrl, '_blank', 'noopener,noreferrer');
-            this.reset();
-          });
-        }
-      });
-    </script>
+    <script src="assets/config.js?v=real-offers-20261007"></script>
+    <script src="assets/site.js?v=real-offers-20261007"></script>
   </body>
 </html>

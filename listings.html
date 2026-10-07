@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ponuka | Properly</title>
-    <meta name="description" content="Ukážková ponuka nehnuteľností Properly pre Bratislavu a okolie.">
+    <meta name="description" content="Ponuky nehnuteľností Miriam Bartošovičovej. Predaj a prenájom cez Properly.">
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/styles.css?v=real-offers-20261007">
   </head>
   <body data-page="listings">
     <header class="site-header">
@@ -34,7 +34,7 @@
       <section class="page-hero">
         <div class="container compact-hero">
           <h1 data-i18n="listingsPageTitle">Ponuka nehnuteľností</h1>
-          <p data-i18n="listingsPageText">Grid a filtre sú pripravené pre 20+ reálnych záznamov z jednoduchého backendu. Aktuálne položky sú označené ako ukážkové dáta.</p>
+          <p data-i18n="listingsPageText">Ponuky Miriam Bartošovičovej. Vyberte si lokalitu, typ nehnuteľnosti a rozpočet.</p>
         </div>
       </section>
 
@@ -53,11 +53,8 @@
               <span data-i18n="fieldLocation">Lokalita</span>
               <select name="location">
                 <option value="" data-i18n="filterAnyLocation">Akákoľvek lokalita</option>
-                <option value="Bratislava - Staré Mesto">Bratislava - Staré Mesto</option>
-                <option value="Bratislava - Devín">Bratislava - Devín</option>
-                <option value="Bratislava - Ružinov">Bratislava - Ružinov</option>
-                <option value="Bratislava - Petržalka">Bratislava - Petržalka</option>
-                <option value="Bratislava - Karlova Ves">Bratislava - Karlova Ves</option>
+                <option value="Bratislava-Devín">Bratislava-Devín</option>
+                <option value="Bratislava-Ružinov">Bratislava-Ružinov</option>
               </select>
             </label>
             <label>
@@ -65,7 +62,7 @@
               <select name="type">
                 <option value="" data-i18n="filterAnyType">Akýkoľvek typ</option>
                 <option value="apartment" data-i18n="typeApartment">Byt</option>
-                <option value="house" data-i18n="typeHouse">Dom</option>
+                <option value="cottage" data-i18n="typeCottage">Chata</option>
                 <option value="commercial" data-i18n="typeCommercial">Komerčné</option>
               </select>
             </label>
@@ -81,9 +78,11 @@
           </form>
           <div class="listing-toolbar">
             <p id="listingCount" aria-live="polite"></p>
-            <p class="sample-note" data-i18n="sheetReady">Dátový model je pripravený na napojenie na Google Sheet alebo jednoduché API.</p>
+            <p class="source-note" data-i18n="sourceLabel">Zdroj ponúk: Nehnuteľnosti.sk</p>
           </div>
+          <p class="source-note" data-source-status role="status" hidden></p>
           <div class="listing-grid expanded" id="listingsGrid"></div>
+          <p class="center-note" data-i18n="recordsNote">Údaje z Nehnuteľnosti.sk k 07.10.2026. Aktuálnu dostupnosť potvrďte s maklérkou.</p>
         </div>
       </section>
     </main>
@@ -95,6 +94,7 @@
         <a class="footer-domain" href="index.html">properly.sk</a>
       </div>
     </footer>
-    <script src="assets/site.js"></script>
+    <script src="assets/config.js?v=real-offers-20261007"></script>
+    <script src="assets/site.js?v=real-offers-20261007"></script>
   </body>
 </html>
