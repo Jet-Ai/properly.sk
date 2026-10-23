@@ -1,6 +1,6 @@
 # Properly Static Website
 
-Self-contained HTML/CSS/JavaScript site for `properly.sk`, deployable to GitHub Pages without a build step. Slovak, English, Turkish and Russian are supported. Place names, prices and measurements remain unchanged across languages.
+Self-contained HTML/CSS/JavaScript site for `properly.sk`, deployable to GitHub Pages without a build step. Only Slovak and English are available. Saved selections of removed languages fall back to Slovak. Place names, prices and measurements remain unchanged across languages.
 
 ## Brand
 

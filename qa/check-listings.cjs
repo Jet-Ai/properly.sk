@@ -12,7 +12,7 @@ const offers = [
   { id: "Ju_QG6nD8-l", price: "199 990 €", area: 77, count: 9, location: "Bratislava-Ružinov" },
   { id: "JuVh27TJtQ0", price: "219 000 €", area: 34, count: 16, location: "Bratislava-Devín" }
 ];
-const languages = ["sk", "en", "tr", "ru"];
+const languages = ["sk", "en"];
 const screenshots = path.join(os.tmpdir(), "properly-real-listings-qa");
 
 function serve(req, res) {
@@ -62,6 +62,27 @@ async function run() {
     page.on("pageerror", (error) => errors.push(error.message));
     page.on("response", (response) => { if (response.status() >= 400) errors.push(response.status() + " " + response.url()); });
 
+    for (const removed of ["tr", "ru"]) {
+      const fallbackContext = await browser.newContext();
+      await fallbackContext.addInitScript((language) => localStorage.setItem("properlyLang", language), removed);
+      const fallbackPage = await fallbackContext.newPage();
+      await fallbackPage.goto(base + "listings.html");
+      assert.equal(await fallbackPage.locator("html").getAttribute("lang"), "sk");
+      assert.equal(await fallbackPage.evaluate(() => localStorage.getItem("properlyLang")), "sk");
+      await fallbackContext.close();
+    }
+    for (const route of ["index.html", "listings.html", "listing-detail.html?id=" + offers[0].id, "about.html", "contact.html"]) {
+      await page.goto(base + route);
+      assert.deepEqual(await page.locator("[data-lang]").evaluateAll((buttons) => buttons.map((button) => button.dataset.lang)), languages);
+      await page.locator('[data-lang="en"]').click();
+      assert.equal(await page.locator("html").getAttribute("lang"), "en");
+    }
+    await page.reload();
+    assert.equal(await page.locator("html").getAttribute("lang"), "en");
+    await page.goto(base + "about.html");
+    await page.locator('[data-lang="en"]').click();
+    assert.equal(await page.locator('[data-i18n="aboutPointThree"]').textContent(), "Two languages");
+    assert(!(await page.locator('[data-i18n="aboutPointThreeText"]').textContent()).includes("Turkish"));
     await page.goto(base + "listings.html");
     await page.waitForSelector(".listing-card");
     assert.equal(await page.locator(".listing-card").count(), 4);
@@ -224,7 +245,7 @@ async function run() {
     await page.goto(base + "about.html");
     assert.equal(await page.locator(".certificate-preview img").count(), 1);
     assert.deepEqual(errors, []);
-    console.log("PASS: four real adverts, 41 photos, filters/search, four languages, galleries, 320/390px layouts, unknown IDs, feed fallback, future offer/missing data/stale feed, and preserved WhatsApp enquiries.");
+    console.log("PASS: four real adverts, 41 photos, filters/search, SK/EN only across five pages, removed-language fallback, galleries, 320/390px layouts, unknown IDs, feed fallback, future offer/missing data/stale feed, and preserved WhatsApp enquiries.");
     console.log("Screenshots: " + screenshots);
   } finally {
     if (browser) await browser.close();

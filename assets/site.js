@@ -118,8 +118,8 @@ const translations = {
     aboutPointOneText: "Komunikácia nadväzuje na reálne kontakty a odporúčania v Bratislave.",
     aboutPointTwo: "Profesionálna sieť",
     aboutPointTwoText: "Súčasťou procesu sú právne, finančné a technické kontakty podľa potreby obchodu.",
-    aboutPointThree: "Štyri jazyky",
-    aboutPointThreeText: "Slovenská, anglická, turecká a ruská komunikácia bez zmeny cien alebo miest.",
+    aboutPointThree: "Dva jazyky",
+    aboutPointThreeText: "Slovenská a anglická komunikácia bez zmeny cien alebo miest.",
     certificateTitle: "Osvedčenie realitného makléra",
     certificateText: "Miriam Bartošovičová absolvovala akreditovaný vzdelávací program ďalšieho vzdelávania Realitný maklér. Certifikát potvrdzuje odbornú prípravu v rozsahu 150 hodín.",
     certificateAuthority: "NARKS, Národná asociácia realitných kancelárií Slovenska",
@@ -252,8 +252,8 @@ const translations = {
     aboutPointOneText: "Communication builds on real contacts and referrals in Bratislava.",
     aboutPointTwo: "Professional network",
     aboutPointTwoText: "Legal, financial, and technical contacts are part of the process when the transaction needs them.",
-    aboutPointThree: "Four languages",
-    aboutPointThreeText: "Slovak, English, Turkish, and Russian communication without changing prices or places.",
+    aboutPointThree: "Two languages",
+    aboutPointThreeText: "Slovak and English communication without changing prices or places.",
     certificateTitle: "Real estate broker training certificate",
     certificateText: "Miriam Bartošovičová completed the accredited continuing education program Realitný maklér. The certificate confirms 150 hours of professional training.",
     certificateAuthority: "NARKS, Slovak National Association of Real Estate Agencies",
@@ -670,10 +670,12 @@ let sourceLoading = false;
 let catalogueDate = "07.10.2026";
 const gallerySelections = new Map();
 
+const supportedLanguages = ["sk", "en"];
 let currentLang = "sk";
 try {
   const saved = localStorage.getItem("properlyLang");
-  if (translations[saved]) currentLang = saved;
+  if (supportedLanguages.includes(saved)) currentLang = saved;
+  else if (saved) localStorage.setItem("properlyLang", currentLang);
 } catch (_) {
   // Local file previews can disable browser storage.
 }
@@ -1000,6 +1002,7 @@ function renderDynamicAreas() {
 function bindLanguageSwitcher() {
   document.querySelectorAll("[data-lang]").forEach((button) => {
     button.addEventListener("click", () => {
+      if (!supportedLanguages.includes(button.dataset.lang)) return;
       currentLang = button.dataset.lang;
       try { localStorage.setItem("properlyLang", currentLang); } catch (_) {}
       applyTranslations();
