@@ -10,7 +10,8 @@ const offers = [
   { id: "JuMU40TtrqX", price: "279 000 €", area: 82, count: 7, location: "Bratislava-Ružinov" },
   { id: "Ju4Oh8rQb5U", price: "199 990 €", area: 77, count: 9, location: "Bratislava-Ružinov" },
   { id: "Ju_QG6nD8-l", price: "199 990 €", area: 77, count: 9, location: "Bratislava-Ružinov" },
-  { id: "JuVh27TJtQ0", price: "219 000 €", area: 34, count: 16, location: "Bratislava-Devín" }
+  { id: "JuVh27TJtQ0", price: "219 000 €", area: 34, count: 16, location: "Bratislava-Devín" },
+  { id: "JujdUAl_kMr", price: "293 900 €", area: 73, count: 7, location: "Bratislava-Ružinov" }
 ];
 const languages = ["sk", "en"];
 const screenshots = path.join(os.tmpdir(), "properly-real-listings-qa");
@@ -85,7 +86,7 @@ async function run() {
     assert(!(await page.locator('[data-i18n="aboutPointThreeText"]').textContent()).includes("Turkish"));
     await page.goto(base + "listings.html");
     await page.waitForSelector(".listing-card");
-    assert.equal(await page.locator(".listing-card").count(), 4);
+    assert.equal(await page.locator(".listing-card").count(), offers.length);
     assert.equal(await page.locator(".sample-badge").count(), 0);
     assert.equal(await page.locator(".related-offer").count(), 2);
     const initialLocations = await page.locator(".listing-card .location-line").allTextContents();
@@ -102,9 +103,9 @@ async function run() {
     await page.screenshot({ path: path.join(screenshots, "listings-desktop.png"), fullPage: true });
 
     for (const [field, value, count] of [
-      ["mode", "rent", 0], ["mode", "buy", 4],
-      ["type", "apartment", 2], ["type", "commercial", 1], ["type", "cottage", 1],
-      ["location", "Bratislava-Ružinov", 3], ["location", "Bratislava-Devín", 1], ["price", "250000", 3]
+      ["mode", "rent", 0], ["mode", "buy", offers.length],
+      ["type", "apartment", 3], ["type", "commercial", 1], ["type", "cottage", 1],
+      ["location", "Bratislava-Ružinov", 4], ["location", "Bratislava-Devín", 1], ["price", "250000", 3]
     ]) {
       await page.goto(base + "listings.html");
       await page.locator('[name="' + field + '"]').selectOption(value);
@@ -112,11 +113,11 @@ async function run() {
       if (!count) assert.equal(await page.locator(".empty-results").count(), 1);
     }
     await page.goto(base + "index.html");
-    assert.equal(await page.locator("#featuredListings .listing-card").count(), 4);
+    assert.equal(await page.locator("#featuredListings .listing-card").count(), offers.length);
     await page.locator('[data-feature-filter="rent"]').click();
     assert.equal(await page.locator("#featuredListings .listing-card").count(), 0);
     await page.locator('[data-feature-filter="buy"]').click();
-    assert.equal(await page.locator("#featuredListings .listing-card").count(), 4);
+    assert.equal(await page.locator("#featuredListings .listing-card").count(), offers.length);
     await page.locator('#homeSearch [name="location"]').selectOption("Bratislava-Devín");
     await page.locator('#homeSearch [type="submit"]').click();
     await page.waitForURL("**/listings.html?**");
@@ -133,6 +134,13 @@ async function run() {
         await page.locator('[data-lang="' + language + '"]').click();
         assert.equal(await page.locator(".detail-price").textContent(), offer.price);
         assert((await page.locator(".detail-summary .location-line").textContent()).includes(offer.location));
+        if (offer.id === "JujdUAl_kMr") {
+          assert.match(await page.locator(".detail-summary").textContent(), /44 000/);
+          assert.match(await page.locator(".photo-disclosure").textContent(), /AI/);
+          assert.match(await page.locator(".photo-disclosure").textContent(), /vizualiz|visualization/);
+          assert.match(await page.locator(".spec-panel").textContent(), /18 m² \/ 44 000/);
+          assert.match(await page.locator(".detail-summary").textContent(), /23[.]10[.]2026/);
+        }
         await noOverflow(page);
       }
       await page.locator('[data-photo-index="0"]').click();
@@ -166,6 +174,10 @@ async function run() {
           await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
           await page.screenshot({ path: path.join(screenshots, route.startsWith("listings") ? "listings-mobile.png" : "devin-mobile.png"), fullPage: true });
         }
+        if (width === 390 && route.endsWith("JujdUAl_kMr")) {
+          await checkImages(page, ".gallery-main");
+          await page.screenshot({ path: path.join(screenshots, "mesacna-mobile.png"), fullPage: true });
+        }
       }
     }
     await page.goto(base + "listing-detail.html?id=stare-mesto-apartment");
@@ -181,12 +193,12 @@ async function run() {
     });
     await page.goto(base + "listings.html");
     await page.waitForSelector(".listing-card");
-    assert.equal(await page.locator(".listing-card").count(), 4);
+    assert.equal(await page.locator(".listing-card").count(), offers.length);
     assert.equal(await page.locator("[data-source-status]").isVisible(), true);
     await page.unroute("**/listings.html");
     await page.unroute("**/qa-feed.json");
 
-    // A fifth QA-only offer exercises future catalogue changes without publishing fictional records.
+    // An extra QA-only offer exercises future changes without publishing fictional records.
     const saved = await page.evaluate(() => listings);
     const future = { ...saved[0], id: "qa-future", mode: "rent", type: "land", location: "Pezinok",
       title: { sk: "QA-only future offer" }, description: { sk: "QA-only original Slovak description" },
@@ -202,7 +214,7 @@ async function run() {
       });
     }
     await page.goto(base + "listings.html");
-    await page.waitForFunction(() => document.querySelectorAll(".listing-card").length === 5);
+    await page.waitForFunction((count) => document.querySelectorAll(".listing-card").length === count, offers.length + 1);
     assert.equal(await page.locator("[data-source-status]").isVisible(), true);
     assert.match(await page.locator('[data-i18n="recordsNote"]').textContent(), /08[.]10[.]2026/);
     await page.locator('[name="location"]').selectOption("Pezinok");
@@ -245,7 +257,7 @@ async function run() {
     await page.goto(base + "about.html");
     assert.equal(await page.locator(".certificate-preview img").count(), 1);
     assert.deepEqual(errors, []);
-    console.log("PASS: four real adverts, 41 photos, filters/search, SK/EN only across five pages, removed-language fallback, galleries, 320/390px layouts, unknown IDs, feed fallback, future offer/missing data/stale feed, and preserved WhatsApp enquiries.");
+    console.log("PASS: five real adverts, 48 source images, optional garage pricing and photo disclosure, filters/search, SK/EN only, removed-language fallback, galleries, 320/390px layouts, unknown IDs, feed fallback, future offers and preserved WhatsApp enquiries.");
     console.log("Screenshots: " + screenshots);
   } finally {
     if (browser) await browser.close();

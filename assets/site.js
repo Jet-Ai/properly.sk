@@ -40,7 +40,7 @@ const translations = {
     chipHouses: "Domy",
     chipCottages: "Chaty",
     chipCommercial: "Komerčné",
-    recordsNote: "Údaje z Nehnuteľnosti.sk k 07.10.2026. Aktuálnu dostupnosť potvrďte s maklérkou.",
+    recordsNote: "Katalóg aktualizovaný: 07.10.2026. Dátum prevzatia údajov nájdete v detaile ponuky. Dostupnosť potvrďte s maklérkou.",
     processTitle: "Overené postupy. Istota pri každom kroku.",
     processOne: "Overiť",
     processOneText: "Kontrola vlastníctva a tiarch v katastri. Právny stav musí byť jasný a overený.",
@@ -174,7 +174,7 @@ const translations = {
     chipHouses: "Houses",
     chipCottages: "Cottages",
     chipCommercial: "Commercial",
-    recordsNote: "Information imported from Nehnuteľnosti.sk on 07.10.2026. Confirm current availability with the broker.",
+    recordsNote: "Catalogue updated: 07.10.2026. Each listing shows its own import date. Confirm availability with the broker.",
     processTitle: "Verified steps. Certainty at every stage.",
     processOne: "Verify",
     processOneText: "Ownership and encumbrances are checked in the registry. The legal status must be clear.",
@@ -539,12 +539,14 @@ const translations = {
 
 Object.assign(translations.sk, {
   typeLand: "Pozemok", typeGarage: "Garáž", typeOther: "Iné",
+  balcony: "Balkón", optionalGarage: "Voliteľná garáž",
   priceOnRequest: "Cena na vyžiadanie", noPhotos: "Fotografie zatiaľ nie sú dostupné",
   originalDescription: "Popis je dostupný v pôvodnom slovenskom znení.",
   loadingOffers: "Načítavame aktuálne ponuky…"
 });
 Object.assign(translations.en, {
   typeLand: "Land", typeGarage: "Garage", typeOther: "Other",
+  balcony: "Balcony", optionalGarage: "Optional garage",
   priceOnRequest: "Price on request", noPhotos: "Photographs not yet available",
   originalDescription: "This description is available in its original Slovak version.",
   loadingOffers: "Loading current offers…"
@@ -568,7 +570,7 @@ function listingPhotos(id, count) {
   );
 }
 
-// Imported from the owner-supplied adverts on 2026-10-07; this is not a live feed.
+// Manual imports from owner-supplied adverts; each record retains its own import date.
 const embeddedListings = [
   {
     id: "JuMU40TtrqX", mode: "buy", type: "apartment",
@@ -661,13 +663,43 @@ const embeddedListings = [
       { label: "terrace", value: "15 m²" },
       { label: "cellar", value: "7 m²" }
     ]
+  },
+  {
+    id: "JujdUAl_kMr", mode: "buy", type: "apartment",
+    location: "Bratislava-Ružinov", address: "Mesačná",
+    priceValue: 293900, area: 73, rooms: "3",
+    photos: listingPhotos("JujdUAl_kMr", 7),
+    sourceUrl: "https://www.nehnutelnosti.sk/detail/JujdUAl_kMr/priestranny-3-izbovy-byt-s-balkonom-a-garazou-v-ruzinove",
+    checkedAt: "23.10.2026", sourceUpdatedAt: "2026-10-13T10:43:39.414Z",
+    title: {
+      sk: "3-izbový byt s balkónom na Mesačnej",
+      en: "3-room apartment with balcony on Mesačná"
+    },
+    description: {
+      sk: "Byt na 5. poschodí zo 7 má samostatnú kuchyňu, kúpeľňu s vaňou, oddelené WC a úložný priestor na medziposchodí. Balkón je prístupný z kuchyne aj obývacej izby. Čiastočná rekonštrukcia prebehla približne v roku 2015. V blízkosti domu možno samostatne dokúpiť murovanú garáž.",
+      en: "On floor 5 of 7, the apartment has a separate kitchen, bathroom with a bathtub, separate toilet and landing storage. The balcony opens from both the kitchen and living room. It was partly renovated around 2015. A nearby brick garage is available to purchase separately."
+    },
+    priceNote: {
+      sk: "Garáž nie je v cene bytu: +44 000 €.",
+      en: "Garage not included in apartment price: +44 000 €."
+    },
+    photoNotice: {
+      sk: "Podľa zdrojového inzerátu boli fotografie zosvetlené pomocou AI. Snímka balkóna obsahuje vizualizáciu.",
+      en: "The source advert discloses AI brightness adjustments. The balcony image includes a visualization."
+    },
+    specs: [
+      { label: "floor", value: "5 / 7" },
+      { label: "condition", valueKey: "partlyRenovated" },
+      { label: "balcony", value: "5 m²" },
+      { label: "optionalGarage", value: "18 m² / 44 000 €" }
+    ]
   }
 ].map(normalizeListingRecord);
 
 let listings = embeddedListings;
 let sourceUnavailable = false;
 let sourceLoading = false;
-let catalogueDate = "07.10.2026";
+let catalogueDate = "23.10.2026";
 const gallerySelections = new Map();
 
 const supportedLanguages = ["sk", "en"];
@@ -769,7 +801,7 @@ async function loadListingsFromBackend() {
     const saved = embeddedListings.find((listing) => listing.id === record.id);
     // Reuse reviewed translations only while their original source version is unchanged.
     if (saved?.sourceUpdatedAt && saved.sourceUpdatedAt === record.sourceUpdatedAt) {
-      record = { ...record, title: saved.title, description: saved.description };
+      record = { ...record, title: saved.title, description: saved.description, priceNote: saved.priceNote, photoNotice: saved.photoNotice };
     }
     return normalizeListingRecord(record);
   });
@@ -840,6 +872,7 @@ function createListingCard(listing) {
           ${listing.rooms ? `<span>${escapeHtml(listing.rooms)} ${escapeHtml(t("rooms").toLowerCase())}</span>` : ""}
         </div>
         ${duplicateNotice(listing, true)}
+        ${listing.priceNote ? `<p class="source-note">${escapeHtml(localized(listing.priceNote))}</p>` : ""}
         <div class="listing-footer">
           <span class="price">${escapeHtml(listing.priceText || t("priceOnRequest"))}</span>
           <a class="detail-link" href="${url}">${escapeHtml(t("listingDetail"))}</a>
@@ -925,6 +958,7 @@ function renderDetail() {
             ${listing.photos.map((photo, index) => `<button type="button" data-photo-index="${index}" aria-label="${escapeHtml(t("photo"))} ${index + 1}" aria-pressed="${index === selected}"><img src="${escapeHtml(photo)}" alt="" loading="lazy" width="96" height="72"></button>`).join("")}
           </div>
           ` : `<div class="no-photo detail-no-photo">${escapeHtml(t("noPhotos"))}</div>`}
+          ${listing.photoNotice ? `<p class="source-note photo-disclosure" role="note">${escapeHtml(localized(listing.photoNotice))}</p>` : ""}
         </div>
         <div class="detail-summary">
           <a class="text-link" href="listings.html">${escapeHtml(t("detailBack"))}</a>
@@ -933,6 +967,7 @@ function renderDetail() {
           <h1>${title}</h1>
           <p class="location-line">${locationIcon()}<span>${escapeHtml(listing.address || "")}${listing.address ? ", " : ""}${escapeHtml(listing.location)}</span></p>
           <p class="detail-price">${escapeHtml(listing.priceText || t("priceOnRequest"))}</p>
+          ${listing.priceNote ? `<p class="source-note">${escapeHtml(localized(listing.priceNote))}</p>` : ""}
           ${duplicateNotice(listing)}
           ${listing.sourceUrl ? `<a class="text-link source-link" href="${escapeHtml(listing.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(t("sourceLink"))}</a>` : ""}
         </div>

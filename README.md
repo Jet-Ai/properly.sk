@@ -13,7 +13,7 @@ The existing verification rail, broker biography and redacted certificate are pr
 
 ## Real Offers
 
-The catalogue in `assets/site.js` contains only the four owner-supplied adverts, imported on **7 October 2026**:
+The catalogue in `assets/site.js` contains five owner-supplied adverts. The original four were imported on **7 October 2026**; the Mesačná advert was added on **23 October 2026**. Each detail retains its own import date:
 
 | Advert | Property | Price | Area |
 | --- | --- | --- | --- |
@@ -21,16 +21,17 @@ The catalogue in `assets/site.js` contains only the four owner-supplied adverts,
 | [Ju4Oh8rQb5U](https://www.nehnutelnosti.sk/detail/Ju4Oh8rQb5U/komercny-priestor-s-loftovym-bytom-v-atraktivnej-lokalite-bratislavy) | Zelinárska loft + commercial premises | 199 990 € | 77 m² |
 | [Ju_QG6nD8-l](https://www.nehnutelnosti.sk/detail/Ju_QG6nD8-l/komercny-priestor-s-loftovym-bytom-v-atraktivnej-lokalite-bratislavy) | Zelinárska commercial advert for the same property | 199 990 € | 77 m² |
 | [JuVh27TJtQ0](https://www.nehnutelnosti.sk/detail/JuVh27TJtQ0/kusok-pokoja-v-devine-murovana-chata-vinohrad-ovocna-zahrada-a-nadherny-vyhlad) | Spätná cesta, Bratislava-Devín cottage | 219 000 € | 34 m² |
+| [JujdUAl_kMr](https://www.nehnutelnosti.sk/detail/JujdUAl_kMr/priestranny-3-izbovy-byt-s-balkonom-a-garazou-v-ruzinove) | Mesačná, Bratislava-Ružinov, apartment with balcony | 293 900 €; optional garage +44 000 € | 73 m² |
 
-**Four adverts represent three distinct properties.** The Zelinárska adverts are cross-linked and labelled on cards and details; they are not presented as two unrelated properties.
+**Five adverts represent four distinct properties.** The Zelinárska adverts are cross-linked and labelled on cards and details; they are not presented as two unrelated properties.
 
-All 41 source photographs are stored in `assets/images/listings/`, with their existing branding intact. No generated/sample property pictures or records are used. Summaries are short paraphrases of the original descriptions, not additional verified claims. Prices and availability require confirmation with Miriam.
+All 48 source images are stored in `assets/images/listings/`, with their existing branding intact. No invented property records are used. The Mesačná gallery includes the source's floor plan and a balcony visualization; the listing visibly discloses the source's AI brightness adjustments and visualization. Its 18 m² garage is optional and is not included in the apartment price. Summaries are short paraphrases of the source descriptions, not additional verified claims. Prices and availability require confirmation with Miriam.
 
 By default this is a **manual snapshot**, not a live connection. The custom connector in `api/` can discover future adverts and synchronize changes and withdrawals after deployment and the portal's written permission. It is built but **disabled and not deployed**. See [connector setup and safeguards](api/README.md). Visitors' browsers never scrape the portal.
 
 ## Pages
 
-- `index.html`: all four adverts, buy/rent search and type filters.
+- `index.html`: all five adverts, buy/rent search and type filters.
 - `listings.html`: full catalogue with client-side location, type and price filters.
 - `listing-detail.html?id=JuMU40TtrqX`: real photo gallery, factual specifications, source and broker contact links.
 - `about.html`: agency information and redacted broker certificate.

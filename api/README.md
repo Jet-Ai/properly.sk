@@ -2,7 +2,7 @@
 
 ## Current Status
 
-The connector and website integration are built locally. Collection is **disabled**, no cron is enabled, and no Cloudflare deployment or live catalogue refresh has been performed. The website still uses its four real, manually imported adverts until a working endpoint is configured.
+The connector and website integration are built locally. Collection is **disabled**, no cron is enabled, and no Cloudflare deployment or live catalogue refresh has been performed. The website uses five real, manually imported adverts until a working endpoint is configured.
 
 Offline checks cover all four previously downloaded detail pages, discovery/pagination with mocked catalogues, updates, withdrawals, failure recovery, ownership checks, authorization and browser rendering. The native Cloudflare HTMLRewriter, Durable Object binding and current live agency catalogue must be verified in the deployed runtime before activation is considered complete.
 
